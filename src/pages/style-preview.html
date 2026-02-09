@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SmartAlertPlusTT • Style Preview</title>
+
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #070a10;
+        --panel: rgba(255, 255, 255, 0.04);
+        --panel2: rgba(255, 255, 255, 0.06);
+        --border: rgba(255, 255, 255, 0.10);
+        --text: #eaf0ff;
+        --muted: rgba(234, 240, 255, 0.72);
+        --accent: #7be0d6;
+        --accent2: #8aa7ff;
+        --shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+        --radius: 22px;
+        --radius2: 999px;
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        background: radial-gradient(1200px 800px at 50% -10%, rgba(138,167,255,0.20), transparent 60%),
+                    radial-gradient(900px 700px at 20% 15%, rgba(123,224,214,0.18), transparent 55%),
+                    radial-gradient(800px 600px at 85% 30%, rgba(123,224,214,0.10), transparent 55%),
+                    var(--bg);
+        color: var(--text);
+      }
+
+      a { color: inherit; text-decoration: none; }
+      a:hover { opacity: 0.92; }
+
+      .wrap { max-width: 1100px; margin: 0 auto; padding: 22px 18px 70px; }
+
+      /* Top nav */
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 10px 10px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 850;
+        letter-spacing: 0.2px;
+      }
+
+      .logoDot {
+        width: 12px; height: 12px; border-radius: 999px;
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        box-shadow: 0 0 22px rgba(123,224,214,0.35);
+      }
+
+      .navPills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        justify-content: flex-end;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 13px;
+        border-radius: var(--radius2);
+        border: 1px solid var(--border);
+        background: rgba(255,255,255,0.03);
+        font-size: 13px;
+        color: rgba(234,240,255,0.90);
+        backdrop-filter: blur(10px);
+      }
+
+      .pill.primary {
+        border: 0;
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        color: #071015;
+        font-weight: 750;
+      }
+
+      /* Hero */
+      .hero {
+        margin-top: 18px;
+        border-radius: calc(var(--radius) + 8px);
+        border: 1px solid var(--border);
+        background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .hero::before{
+        content:"";
+        position:absolute; inset:-2px;
+        background: radial-gradient(800px 300px at 50% 0%, rgba(123,224,214,0.15), transparent 60%),
+                    radial-gradient(700px 350px at 90% 30%, rgba(138,167,255,0.16), transparent 60%);
+        pointer-events:none;
+      }
+
+      .heroInner {
+        position: relative;
+        padding: 34px 22px 22px;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 18px;
+        align-items: center;
+      }
+
+      @media (max-width: 900px) {
+        .heroInner { grid-template-columns: 1fr; padding: 26px 18px 18px; }
+      }
+
+      .kickerRow{
+        display:flex;
+        gap:10px;
+        flex-wrap:wrap;
+        align-items:center;
+        margin-bottom: 14px;
+      }
+
+      .kicker{
+        display:inline-flex;
+        align-items:center;
+        gap:8px;
+        padding: 7px 11px;
+        border-radius: var(--radius2);
+        border: 1px solid rgba(255,255,255,0.14);
+        background: rgba(0,0,0,0.18);
+        font-size: 12px;
+        color: rgba(234,240,255,0.88);
+      }
+
+      .kicker strong { color: rgba(234,240,255,0.95); }
+
+      h1{
+        margin: 0 0 10px;
+        font-size: 44px;
+        line-height: 1.05;
+        letter-spacing: -0.6px;
+      }
+
+      @media (max-width: 900px) {
+        h1 { font-size: 36px; }
+      }
+
+      .sub {
+        margin: 0 0 16px;
+        color: var(--muted);
+        line-height: 1.55;
+        font-size: 15px;
+        max-width: 52ch;
+      }
+
+      .ctaRow{
+        display:flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-top: 12px;
+      }
+
+      .ghost {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.12);
+        color: rgba(234,240,255,0.92);
+      }
+
+      /* Hero “mock” media */
+      .mediaCard{
+        border-radius: var(--radius);
+        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(0,0,0,0.20);
+        box-shadow: 0 25px 70px rgba(0,0,0,0.55);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .mediaTop {
+        display:flex;
+        align-items:center;
+        justify-content: space-between;
+        padding: 12px 14px;
+        border-bottom: 1px solid rgba(255,255,255,0.10);
+        background: rgba(255,255,255,0.03);
+      }
+
+      .dots { display:flex; gap:6px; }
+      .dot { width: 8px; height: 8px; border-radius: 999px; opacity: 0.65; background: rgba(255,255,255,0.35); }
+      .dot:nth-child(1){ background: rgba(255,85,85,0.7); }
+      .dot:nth-child(2){ background: rgba(255,201,76,0.7); }
+      .dot:nth-child(3){ background: rgba(93,223,138,0.7); }
+
+      .mediaBody{
+        padding: 18px 16px 20px;
+      }
+
+      .phoneFrame{
+        border-radius: 26px;
+        border: 1px solid rgba(255,255,255,0.14);
+        background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+        height: 360px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        position: relative;
+        overflow:hidden;
+      }
+
+      .phoneFrame::before{
+        content:"";
+        position:absolute; inset:-40px;
+        background: radial-gradient(300px 220px at 35% 25%, rgba(123,224,214,0.25), transparent 60%),
+                    radial-gradient(260px 200px at 65% 70%, rgba(138,167,255,0.20), transparent 60%);
+        filter: blur(2px);
+        opacity: 0.9;
+      }
+
+      .placeholder{
+        position: relative;
+        width: 82%;
+        height: 86%;
+        border-radius: 18px;
+        border: 1px dashed rgba(255,255,255,0.22);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        text-align:center;
+        padding: 14px;
+        color: rgba(234,240,255,0.72);
+        font-size: 13px;
+        line-height: 1.4;
+        background: rgba(0,0,0,0.22);
+      }
+
+      /* Sections */
+      .section {
+        margin-top: 26px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+
+      @media (max-width: 900px){
+        .section { grid-template-columns: 1fr; }
+      }
+
+      .card{
+        border-radius: var(--radius);
+        border: 1px solid rgba(255,255,255,0.10);
+        background: rgba(255,255,255,0.03);
+        padding: 16px;
+      }
+
+      .cardTitle{ font-weight: 800; margin-bottom: 6px; }
+      .cardText{ color: var(--muted); margin: 0; line-height: 1.55; }
+
+      .footer{
+        margin-top: 34px;
+        display:flex;
+        flex-wrap:wrap;
+        gap: 12px;
+        align-items:center;
+        justify-content: space-between;
+        color: rgba(234,240,255,0.62);
+        font-size: 13px;
+      }
+      .footer a { color: rgba(234,240,255,0.78); }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand">
+          <span class="logoDot"></span>
+          <span>SmartAlertPlusTT</span>
+        </div>
+
+        <div class="navPills">
+          <a class="pill" href="#">How it works</a>
+          <a class="pill" href="#">Install</a>
+          <a class="pill" href="#">Privacy</a>
+          <a class="pill" href="#">Support</a>
+          <a class="pill primary" href="#">Get the App</a>
+        </div>
+      </div>
+
+      <section class="hero">
+        <div class="heroInner">
+          <div>
+            <div class="kickerRow">
+              <div class="kicker"><strong>Production Website</strong> • SmartAlertPlusTT</div>
+              <div class="kicker">Design guide preview</div>
+            </div>
+
+            <h1>Clear SOS alerts for real communities.</h1>
+            <p class="sub">
+              SmartAlertPlusTT is designed to be calm, fast, and understandable under stress.
+              This is a style-preview page using your reference design as inspiration (not a replica).
+            </p>
+
+            <div class="ctaRow">
+              <a class="pill primary" href="#">Watch Install Guide</a>
+              <a class="pill ghost" href="#">See How It Works</a>
+              <a class="pill ghost" href="#">Get Support</a>
+            </div>
+          </div>
+
+          <div class="mediaCard">
+            <div class="mediaTop">
+              <div class="dots">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              </div>
+              <div style="color: rgba(234,240,255,0.70); font-size: 12px;">
+                Hero mockup area
+              </div>
+            </div>
+            <div class="mediaBody">
+              <div class="phoneFrame">
+                <div class="placeholder">
+                  Drop a phone mockup or screenshot here later.<br/><br/>
+                  (When ready: replace this block with an <code>&lt;img&gt;</code> pointing to
+                  <code>/images/your-screenshot.png</code>.)
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="card">
+          <div class="cardTitle">Fast, clear alerts</div>
+          <p class="cardText">A simple flow that helps people act quickly without confusion.</p>
+        </div>
+        <div class="card">
+          <div class="cardTitle">Built for setup success</div>
+          <p class="cardText">Installation guidance, permissions help, and calm troubleshooting.</p>
+        </div>
+        <div class="card">
+          <div class="cardTitle">Privacy-first</div>
+          <p class="cardText">We explain what’s used, what’s not stored, and why it matters.</p>
+        </div>
+      </section>
+
+      <div class="footer">
+        <div>© <span id="y"></span> SmartAlertPlusTT</div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a href="#">Terms</a>
+          <a href="#">Privacy</a>
+          <a href="#">Safety</a>
+          <a href="#">Support</a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.getElementById("y").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
