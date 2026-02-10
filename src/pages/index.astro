@@ -2,6 +2,7 @@
 const APP_NAME = "SmartAlertPlusTT";
 const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-first.";
 ---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -10,109 +11,345 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
     <title>{APP_NAME}</title>
 
     <style>
-      :root { color-scheme: dark; }
+      :root {
+        color-scheme: dark;
+        --bg: #070a10;
+        --panel: rgba(255, 255, 255, 0.04);
+        --panel2: rgba(255, 255, 255, 0.06);
+        --border: rgba(255, 255, 255, 0.10);
+        --text: #eaf0ff;
+        --muted: rgba(234, 240, 255, 0.72);
+        --accent: #7be0d6;
+        --accent2: #8aa7ff;
+        --shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+        --radius: 22px;
+        --radius2: 999px;
+      }
+
+      * { box-sizing: border-box; }
       body {
         margin: 0;
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        background: #0b0f14;
-        color: #e8eef6;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        background: radial-gradient(1200px 800px at 50% -10%, rgba(138,167,255,0.20), transparent 60%),
+                    radial-gradient(900px 700px at 20% 15%, rgba(123,224,214,0.18), transparent 55%),
+                    radial-gradient(800px 600px at 85% 30%, rgba(123,224,214,0.10), transparent 55%),
+                    var(--bg);
+        color: var(--text);
       }
-      a { color: #7be0d6; text-decoration: none; }
-      a:hover { text-decoration: underline; }
-      .wrap { max-width: 980px; margin: 0 auto; padding: 28px 18px 60px; }
-      header { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
-      .brand { font-weight: 850; letter-spacing: 0.2px; }
-      nav { display:flex; gap:14px; flex-wrap:wrap; font-size: 14px; opacity: 0.95; }
+
+      a { color: inherit; text-decoration: none; }
+      a:hover { opacity: 0.92; }
+
+      .wrap { max-width: 1100px; margin: 0 auto; padding: 22px 18px 70px; }
+
+      /* Top nav */
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 10px 10px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 850;
+        letter-spacing: 0.2px;
+      }
+
+      .logoDot {
+        width: 12px; height: 12px; border-radius: 999px;
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        box-shadow: 0 0 22px rgba(123,224,214,0.35);
+      }
+
+      .navPills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        justify-content: flex-end;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 13px;
+        border-radius: var(--radius2);
+        border: 1px solid var(--border);
+        background: rgba(255,255,255,0.03);
+        font-size: 13px;
+        color: rgba(234,240,255,0.90);
+        backdrop-filter: blur(10px);
+      }
+
+      .pill.primary {
+        border: 0;
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        color: #071015;
+        font-weight: 750;
+      }
+
+      /* Hero */
       .hero {
-        margin-top: 28px;
-        padding: 22px;
-        border: 1px solid rgba(255,255,255,0.10);
-        border-radius: 18px;
+        margin-top: 18px;
+        border-radius: calc(var(--radius) + 8px);
+        border: 1px solid var(--border);
+        background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .hero::before{
+        content:"";
+        position:absolute; inset:-2px;
+        background: radial-gradient(800px 300px at 50% 0%, rgba(123,224,214,0.15), transparent 60%),
+                    radial-gradient(700px 350px at 90% 30%, rgba(138,167,255,0.16), transparent 60%);
+        pointer-events:none;
+      }
+
+      .heroInner {
+        position: relative;
+        padding: 34px 22px 22px;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 18px;
+        align-items: center;
+      }
+
+      @media (max-width: 900px) {
+        .heroInner { grid-template-columns: 1fr; padding: 26px 18px 18px; }
+      }
+
+      h1{
+        margin: 0 0 10px;
+        font-size: 40px;
+        line-height: 1.05;
+        letter-spacing: -0.6px;
+      }
+      @media (max-width: 900px) { h1 { font-size: 34px; } }
+
+      .sub {
+        margin: 0 0 16px;
+        color: var(--muted);
+        line-height: 1.55;
+        font-size: 15px;
+        max-width: 56ch;
+      }
+
+      .ctaRow{
+        display:flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-top: 12px;
+      }
+
+      .ghost {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.12);
+        color: rgba(234,240,255,0.92);
+      }
+
+      /* Hero “mock” media */
+      .mediaCard{
+        border-radius: var(--radius);
+        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(0,0,0,0.20);
+        box-shadow: 0 25px 70px rgba(0,0,0,0.55);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .mediaTop {
+        display:flex;
+        align-items:center;
+        justify-content: space-between;
+        padding: 12px 14px;
+        border-bottom: 1px solid rgba(255,255,255,0.10);
         background: rgba(255,255,255,0.03);
       }
-      h1 { margin: 0 0 10px; font-size: 34px; }
-      p { margin: 0; line-height: 1.55; opacity: 0.95; }
-      .btns { display:flex; gap:12px; flex-wrap:wrap; margin-top: 16px; }
-      .btn {
-        display:inline-block;
-        padding: 10px 14px;
-        border-radius: 12px;
+
+      .dots { display:flex; gap:6px; }
+      .dot { width: 8px; height: 8px; border-radius: 999px; opacity: 0.65; background: rgba(255,255,255,0.35); }
+      .dot:nth-child(1){ background: rgba(255,85,85,0.7); }
+      .dot:nth-child(2){ background: rgba(255,201,76,0.7); }
+      .dot:nth-child(3){ background: rgba(93,223,138,0.7); }
+
+      .mediaBody{ padding: 18px 16px 20px; }
+
+      .phoneFrame{
+        border-radius: 26px;
         border: 1px solid rgba(255,255,255,0.14);
-        background: rgba(255,255,255,0.05);
+        background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+        height: 360px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        position: relative;
+        overflow:hidden;
       }
-      .btn.primary { background:#7be0d6; color:#071015; border-color: transparent; font-weight: 700; }
-      .grid {
-        margin-top: 16px;
+
+      .phoneFrame::before{
+        content:"";
+        position:absolute; inset:-40px;
+        background: radial-gradient(300px 220px at 35% 25%, rgba(123,224,214,0.25), transparent 60%),
+                    radial-gradient(260px 200px at 65% 70%, rgba(138,167,255,0.20), transparent 60%);
+        filter: blur(2px);
+        opacity: 0.9;
+      }
+
+      .placeholder{
+        position: relative;
+        width: 82%;
+        height: 86%;
+        border-radius: 18px;
+        border: 1px dashed rgba(255,255,255,0.22);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        text-align:center;
+        padding: 14px;
+        color: rgba(234,240,255,0.72);
+        font-size: 13px;
+        line-height: 1.4;
+        background: rgba(0,0,0,0.22);
+      }
+
+      /* Sections */
+      .section {
+        margin-top: 22px;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        grid-template-columns: repeat(3, 1fr);
         gap: 12px;
       }
-      .card {
-        padding: 16px;
-        border-radius: 16px;
-        border: 1px solid rgba(255,255,255,0.08);
-        background: rgba(255,255,255,0.02);
+
+      @media (max-width: 900px){
+        .section { grid-template-columns: 1fr; }
       }
-      .kicker { margin-top: 24px; }
-      footer { margin-top: 40px; font-size: 13px; opacity: 0.8; display:flex; gap:12px; flex-wrap:wrap; }
+
+      .card{
+        border-radius: var(--radius);
+        border: 1px solid rgba(255,255,255,0.10);
+        background: rgba(255,255,255,0.03);
+        padding: 16px;
+      }
+
+      .cardTitle{ font-weight: 800; margin-bottom: 6px; }
+      .cardText{ color: var(--muted); margin: 0; line-height: 1.55; }
+
+      .kicker {
+        margin-top: 24px;
+        border-radius: var(--radius);
+        border: 1px solid rgba(255,255,255,0.10);
+        background: rgba(255,255,255,0.03);
+        padding: 16px;
+      }
+
+      .kicker h2{ margin: 0 0 6px; font-size: 18px; }
+      .kicker p{ margin: 0; color: var(--muted); line-height: 1.55; }
+
+      .footer{
+        margin-top: 34px;
+        display:flex;
+        flex-wrap:wrap;
+        gap: 12px;
+        align-items:center;
+        justify-content: space-between;
+        color: rgba(234,240,255,0.62);
+        font-size: 13px;
+      }
+      .footer a { color: rgba(234,240,255,0.78); }
     </style>
   </head>
 
   <body>
     <div class="wrap">
-      <header>
-        <div class="brand">{APP_NAME}</div>
-        <nav>
-          <a href="/how-it-works">How it works</a>
-          <a href="/install">Install & Setup</a>
-          <a href="/privacy">Privacy</a>
-          <a href="/safety">Safety</a>
-          <a href="/faq">FAQ</a>
-          <a href="/support">Support</a>
-        </nav>
-      </header>
-
-      <section class="hero">
-        <h1>{tagline}</h1>
-        <p>
-          SmartAlertPlusTT helps communities share urgent SOS alerts quickly and clearly.
-          Designed to be understandable under stress, and respectful of your privacy.
-        </p>
-
-        <div class="btns">
-          <a class="btn primary" href="#get-app">Get the App</a>
-          <a class="btn" href="/install">Watch the Install Guide</a>
-          <a class="btn" href="/support">Need help?</a>
+      <div class="topbar">
+        <div class="brand">
+          <span class="logoDot"></span>
+          <span>{APP_NAME}</span>
         </div>
 
-        <div class="grid">
-          <div class="card">
-            <div style="font-weight:750; margin-bottom:6px;">Fast, simple alerts</div>
-            <p>One action sends a clear SOS alert to your community group.</p>
+        <div class="navPills">
+          <a class="pill" href="/how-it-works">How it works</a>
+          <a class="pill" href="/install">Install</a>
+          <a class="pill" href="/privacy">Privacy</a>
+          <a class="pill" href="/support">Support</a>
+          <a class="pill primary" href="#get-app">Get the App</a>
+        </div>
+      </div>
+
+      <section class="hero">
+        <div class="heroInner">
+          <div>
+            <h1>{tagline}</h1>
+            <p class="sub">
+              SmartAlertPlusTT helps communities share urgent SOS alerts quickly and clearly.
+              Designed to be understandable under stress — and respectful of your privacy.
+            </p>
+
+            <div class="ctaRow">
+              <a class="pill primary" href="/install">Watch Install Guide</a>
+              <a class="pill ghost" href="/how-it-works">See How It Works</a>
+              <a class="pill ghost" href="/support">Need help?</a>
+            </div>
           </div>
-          <div class="card">
-            <div style="font-weight:750; margin-bottom:6px;">Built for real life</div>
-            <p>Guided setup, permissions help, and clear troubleshooting.</p>
+
+          <div class="mediaCard">
+            <div class="mediaTop">
+              <div class="dots">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              </div>
+              <div style="color: rgba(234,240,255,0.70); font-size: 12px;">
+                App preview
+              </div>
+            </div>
+            <div class="mediaBody">
+              <div class="phoneFrame">
+                <div class="placeholder">
+                  Drop a phone screenshot here later.<br/><br/>
+                  (After you upload screenshots, we’ll pick the best “confidence screen” for the hero.)
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="card">
-            <div style="font-weight:750; margin-bottom:6px;">Privacy-first by design</div>
-            <p>We explain what data is used — and what is not.</p>
-          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="card">
+          <div class="cardTitle">Fast, simple alerts</div>
+          <p class="cardText">One action sends a clear SOS alert to your community group.</p>
+        </div>
+        <div class="card">
+          <div class="cardTitle">Built for real life</div>
+          <p class="cardText">Guided setup, permissions help, and clear troubleshooting.</p>
+        </div>
+        <div class="card">
+          <div class="cardTitle">Privacy-first by design</div>
+          <p class="cardText">We explain what data is used — and what is not.</p>
         </div>
       </section>
 
       <section id="get-app" class="kicker">
-        <h2 style="margin:0 0 8px; font-size:20px;">Get the App</h2>
+        <h2>Get the App</h2>
         <p>(We’ll add your Google Play link here when you’re ready.)</p>
       </section>
 
-      <footer>
-        <span>© {new Date().getFullYear()} {APP_NAME}</span>
-        <a href="/terms">Terms</a>
-        <a href="/privacy">Privacy</a>
-        <a href="/safety">Safety</a>
-        <a href="/support">Contact</a>
-      </footer>
+      <div class="footer">
+        <div>© {new Date().getFullYear()} {APP_NAME}</div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a href="/terms">Terms</a>
+          <a href="/privacy">Privacy</a>
+          <a href="/safety">Safety</a>
+          <a href="/support">Contact</a>
+        </div>
+      </div>
     </div>
   </body>
 </html>
