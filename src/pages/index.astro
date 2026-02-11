@@ -424,27 +424,27 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
   box-shadow: 0 18px 50px rgba(0,0,0,0.45);
 }
 
-/* === APP-STYLE RAINBOW PULSE RING === */
+/* === STATIC MULTICOLOR BORDER (NO ANIMATION) === */
 .slide {
   position: relative;
   border-radius: 18px;
   overflow: hidden;
 }
 
-/* keep content above the ring */
+/* keep image + caption above border */
 .slide > * {
   position: relative;
   z-index: 1;
 }
 
-/* the ring */
+/* border ring only */
 .slide::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
 
-  /* thickness of the ring */
+  /* border thickness */
   padding: 4px;
 
   background: linear-gradient(
@@ -456,9 +456,8 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
     #ff5fd7,   /* Magenta */
     #ff3b3b
   );
-  background-size: 300% 300%;
 
-  /* ring cutout (no image overlay) */
+  /* ring cut-out so image is untouched */
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
@@ -467,32 +466,14 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
 
   pointer-events: none;
   z-index: 10;
-
-  /* 👇 matches rainbowAlpha pulse */
-  opacity: 0.35;
-  animation: rainbowPulse 1800ms ease-in-out infinite alternate;
+  opacity: 0.85; /* calm, readable */
 }
 
-/* pulse only — no spinning */
-@keyframes rainbowPulse {
-  from {
-    opacity: 0.35;
-    background-position: 0% 50%;
-  }
-  to {
-    opacity: 0.9;
-    background-position: 100% 50%;
-  }
+/* hard-disable any old glow layers */
+.slide::after {
+  content: none !important;
+  display: none !important;
 }
-
-/* accessibility */
-@media (prefers-reduced-motion: reduce) {
-  .slide::before {
-    animation: none;
-    opacity: 0.6;
-  }
-}
-
 </style>
   </head>
 
