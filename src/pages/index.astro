@@ -6,8 +6,8 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{APP_NAME}</title>
 
     <style>
@@ -27,25 +27,29 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
       }
 
       * { box-sizing: border-box; }
+      html, body { height: 100%; }
       body {
         margin: 0;
         font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        background:
-          radial-gradient(1200px 800px at 50% -10%, rgba(138,167,255,0.20), transparent 60%),
-          radial-gradient(900px 700px at 20% 15%, rgba(123,224,214,0.18), transparent 55%),
-          radial-gradient(800px 600px at 85% 30%, rgba(123,224,214,0.10), transparent 55%),
-          var(--bg);
+        background: radial-gradient(1200px 800px at 50% -10%, rgba(138,167,255,0.20), transparent 60%),
+                    radial-gradient(900px 700px at 20% 15%, rgba(123,224,214,0.18), transparent 55%),
+                    radial-gradient(800px 600px at 85% 30%, rgba(123,224,214,0.10), transparent 55%),
+                    var(--bg);
         color: var(--text);
       }
 
       a { color: inherit; text-decoration: none; }
+      a:hover { opacity: 0.92; }
+
       .wrap { max-width: 1100px; margin: 0 auto; padding: 22px 18px 70px; }
 
+      /* Top nav */
       .topbar {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 14px;
+        padding: 10px 10px;
       }
 
       .brand {
@@ -53,103 +57,225 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
         align-items: center;
         gap: 10px;
         font-weight: 850;
+        letter-spacing: 0.2px;
       }
 
       .logoDot {
-        width: 12px;
-        height: 12px;
-        border-radius: 999px;
+        width: 12px; height: 12px; border-radius: 999px;
         background: linear-gradient(135deg, var(--accent), var(--accent2));
+        box-shadow: 0 0 22px rgba(123,224,214,0.35);
       }
 
       .navPills {
         display: flex;
-        gap: 10px;
         flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        justify-content: flex-end;
       }
 
       .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
         padding: 9px 13px;
         border-radius: var(--radius2);
         border: 1px solid var(--border);
         background: rgba(255,255,255,0.03);
         font-size: 13px;
+        color: rgba(234,240,255,0.90);
+        backdrop-filter: blur(10px);
       }
 
       .pill.primary {
-        border: none;
+        border: 0;
         background: linear-gradient(135deg, var(--accent), var(--accent2));
         color: #071015;
-        font-weight: 700;
+        font-weight: 750;
       }
 
+      .pill.ghost {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.12);
+        color: rgba(234,240,255,0.92);
+      }
+
+      /* Hero */
       .hero {
         margin-top: 18px;
-        border-radius: 30px;
+        border-radius: calc(var(--radius) + 8px);
         border: 1px solid var(--border);
-        background: rgba(255,255,255,0.03);
+        background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+        box-shadow: var(--shadow);
         overflow: hidden;
+        position: relative;
+      }
+
+      .hero::before{
+        content:"";
+        position:absolute; inset:-2px;
+        background: radial-gradient(800px 300px at 50% 0%, rgba(123,224,214,0.15), transparent 60%),
+                    radial-gradient(700px 350px at 90% 30%, rgba(138,167,255,0.16), transparent 60%);
+        pointer-events:none;
       }
 
       .heroInner {
-        padding: 32px 22px;
+        position: relative;
+        padding: 34px 22px 22px;
         display: grid;
         grid-template-columns: 1.1fr 0.9fr;
         gap: 18px;
+        align-items: center;
       }
 
       @media (max-width: 900px) {
-        .heroInner { grid-template-columns: 1fr; }
+        .heroInner { grid-template-columns: 1fr; padding: 26px 18px 18px; }
       }
 
-      h1 {
-        margin: 0 0 10px;
-        font-size: 42px;
+      .kickerRow{
+        display:flex;
+        gap:10px;
+        flex-wrap:wrap;
+        align-items:center;
+        margin-bottom: 14px;
       }
+
+      .kicker{
+        display:inline-flex;
+        align-items:center;
+        gap:8px;
+        padding: 7px 11px;
+        border-radius: var(--radius2);
+        border: 1px solid rgba(255,255,255,0.14);
+        background: rgba(0,0,0,0.18);
+        font-size: 12px;
+        color: rgba(234,240,255,0.88);
+      }
+
+      .kicker strong { color: rgba(234,240,255,0.95); }
+
+      h1{
+        margin: 0 0 10px;
+        font-size: 44px;
+        line-height: 1.05;
+        letter-spacing: -0.6px;
+      }
+      @media (max-width: 900px) { h1 { font-size: 36px; } }
 
       .sub {
+        margin: 0 0 16px;
         color: var(--muted);
+        line-height: 1.55;
+        font-size: 15px;
         max-width: 60ch;
       }
 
-      .ctaRow {
-        margin-top: 14px;
-        display: flex;
+      .ctaRow{
+        display:flex;
         gap: 10px;
         flex-wrap: wrap;
+        align-items: center;
+        margin-top: 12px;
       }
 
-      .mediaCard {
-        border-radius: 22px;
+      /* Hero “mock” media */
+      .mediaCard{
+        border-radius: var(--radius);
         border: 1px solid rgba(255,255,255,0.12);
         background: rgba(0,0,0,0.20);
+        box-shadow: 0 25px 70px rgba(0,0,0,0.55);
         overflow: hidden;
+        position: relative;
       }
 
-      .mediaBody {
-        padding: 16px;
+      .mediaTop {
+        display:flex;
+        align-items:center;
+        justify-content: space-between;
+        padding: 12px 14px;
+        border-bottom: 1px solid rgba(255,255,255,0.10);
+        background: rgba(255,255,255,0.03);
       }
 
-      .phoneFrame {
+      .dots { display:flex; gap:6px; }
+      .dot { width: 8px; height: 8px; border-radius: 999px; opacity: 0.65; background: rgba(255,255,255,0.35); }
+      .dot:nth-child(1){ background: rgba(255,85,85,0.7); }
+      .dot:nth-child(2){ background: rgba(255,201,76,0.7); }
+      .dot:nth-child(3){ background: rgba(93,223,138,0.7); }
+
+      .mediaBody{ padding: 18px 16px 20px; }
+
+      .phoneFrame{
+        border-radius: 26px;
+        border: 1px solid rgba(255,255,255,0.14);
+        background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
         height: 360px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        position: relative;
+        overflow:hidden;
+      }
+
+      .phoneFrame::before{
+        content:"";
+        position:absolute; inset:-40px;
+        background: radial-gradient(300px 220px at 35% 25%, rgba(123,224,214,0.25), transparent 60%),
+                    radial-gradient(260px 200px at 65% 70%, rgba(138,167,255,0.20), transparent 60%);
+        filter: blur(2px);
+        opacity: 0.9;
       }
 
       .heroShot {
+        position: relative;
         width: 82%;
         height: 86%;
         border-radius: 18px;
         border: 1px solid rgba(255,255,255,0.12);
         object-fit: cover;
+        background: rgba(0,0,0,0.22);
       }
 
+      /* Feature cards */
+      .section3 {
+        margin-top: 26px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      @media (max-width: 900px){ .section3 { grid-template-columns: 1fr; } }
+
+      .card{
+        border-radius: var(--radius);
+        border: 1px solid rgba(255,255,255,0.10);
+        background: rgba(255,255,255,0.03);
+        padding: 16px;
+      }
+
+      .cardTitle{ font-weight: 800; margin-bottom: 6px; }
+      .cardText{ color: var(--muted); margin: 0; line-height: 1.55; }
+
+      /* Standard sections */
+      .block {
+        margin-top: 18px;
+        border-radius: var(--radius);
+        border: 1px solid rgba(255,255,255,0.10);
+        background: rgba(255,255,255,0.03);
+        padding: 18px;
+      }
+      .block h2{ margin: 0 0 8px; font-size: 20px; letter-spacing: -0.2px; }
+      .block p{ margin: 0; color: var(--muted); line-height: 1.6; max-width: 78ch; }
+      .blockHeader { display:flex; align-items:flex-start; justify-content:space-between; gap: 14px; flex-wrap: wrap; }
+      .blockMeta { display:flex; gap: 10px; flex-wrap: wrap; }
+
+      /* Carousel (swipeable) */
       .carousel {
         margin-top: 14px;
-        border-radius: 22px;
+        border-radius: calc(var(--radius) + 6px);
         border: 1px solid rgba(255,255,255,0.10);
         background: rgba(0,0,0,0.18);
+        overflow: hidden;
+        position: relative;
       }
 
       .track {
@@ -157,31 +283,123 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
         gap: 12px;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
         padding: 14px;
+        -webkit-overflow-scrolling: touch;
       }
+
+      .track::-webkit-scrollbar { height: 10px; }
+      .track::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.10); border-radius: 999px; }
+      .track::-webkit-scrollbar-track { background: rgba(0,0,0,0.20); }
 
       .slide {
         flex: 0 0 78%;
         scroll-snap-align: center;
         border-radius: 18px;
         border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(0,0,0,0.18);
         overflow: hidden;
-        min-height: 220px;
+        position: relative;
+        box-shadow: 0 18px 50px rgba(0,0,0,0.45);
       }
+      @media (max-width: 900px) { .slide { flex-basis: 92%; } }
 
       .slide img {
+        display: block;
         width: 100%;
         height: auto;
-        object-fit: contain;
-        display: block;
       }
 
       .slideCap {
-        padding: 10px;
-        font-size: 13px;
-        color: var(--muted);
+        padding: 10px 12px 12px;
+        border-top: 1px solid rgba(255,255,255,0.10);
         background: rgba(255,255,255,0.03);
+        color: rgba(234,240,255,0.78);
+        font-size: 13px;
+        line-height: 1.35;
       }
+
+      .controls {
+        position: absolute;
+        inset: auto 10px 10px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        pointer-events: none;
+        gap: 10px;
+      }
+
+      .ctrlBtn {
+        pointer-events: auto;
+        border: 1px solid rgba(255,255,255,0.14);
+        background: rgba(0,0,0,0.40);
+        color: rgba(234,240,255,0.92);
+        padding: 8px 10px;
+        border-radius: var(--radius2);
+        font-size: 13px;
+        backdrop-filter: blur(10px);
+        user-select: none;
+      }
+      .ctrlBtn:hover { opacity: 0.95; }
+
+      .dotsRow {
+        pointer-events: auto;
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .dotBtn {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.18);
+        background: rgba(255,255,255,0.10);
+        padding: 0;
+        cursor: pointer;
+      }
+      .dotBtn[aria-current="true"]{
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        border-color: transparent;
+        box-shadow: 0 0 18px rgba(123,224,214,0.25);
+      }
+
+      /* Support box */
+      .supportGrid {
+        margin-top: 12px;
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 12px;
+      }
+      @media (max-width: 900px){ .supportGrid { grid-template-columns: 1fr; } }
+
+      .softPanel {
+        border-radius: var(--radius);
+        border: 1px solid rgba(255,255,255,0.10);
+        background: rgba(255,255,255,0.03);
+        padding: 16px;
+      }
+      .softTitle { font-weight: 800; margin-bottom: 6px; }
+      .softText { margin: 0; color: var(--muted); line-height: 1.6; }
+      .hint { margin-top: 10px; color: rgba(234,240,255,0.62); font-size: 13px; line-height: 1.55; }
+
+      /* Footer */
+      .footer{
+        margin-top: 34px;
+        display:flex;
+        flex-wrap:wrap;
+        gap: 12px;
+        align-items:center;
+        justify-content: space-between;
+        color: rgba(234,240,255,0.62);
+        font-size: 13px;
+      }
+      .footer a { color: rgba(234,240,255,0.78); }
+
+      /* Anchor scroll offset */
+      :target { scroll-margin-top: 90px; }
     </style>
   </head>
 
@@ -192,56 +410,438 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
           <span class="logoDot"></span>
           <span>{APP_NAME}</span>
         </div>
+
         <div class="navPills">
           <a class="pill" href="#how">How it works</a>
           <a class="pill" href="#install">Install</a>
+          <a class="pill" href="#privacy">Privacy</a>
           <a class="pill" href="#support">Support</a>
           <a class="pill primary" href="#get-app">Get the App</a>
         </div>
       </div>
 
-      <section class="hero">
+      <section class="hero" id="top">
         <div class="heroInner">
           <div>
+            <div class="kickerRow">
+              <div class="kicker"><strong>Safety-first</strong> • Community app</div>
+              <div class="kicker">Calm under stress</div>
+            </div>
+
             <h1>{tagline}</h1>
             <p class="sub">
-              SmartAlertPlusTT helps communities share urgent SOS alerts quickly and clearly —
-              designed to be calm under stress and respectful of privacy.
+              SmartAlertPlusTT helps communities share urgent SOS alerts quickly and clearly.
+              Designed to be understandable under stress — and respectful of your privacy.
             </p>
+
             <div class="ctaRow">
               <a class="pill primary" href="#install">Watch Install Guide</a>
-              <a class="pill" href="#how">See How It Works</a>
+              <a class="pill ghost" href="#how">See How It Works</a>
+              <a class="pill ghost" href="#support">Need help?</a>
             </div>
           </div>
 
-          <div class="mediaCard">
+          <div class="mediaCard" aria-label="App preview">
+            <div class="mediaTop">
+              <div class="dots" aria-hidden="true">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              </div>
+              <div style="color: rgba(234,240,255,0.70); font-size: 12px;">
+                App preview
+              </div>
+            </div>
             <div class="mediaBody">
               <div class="phoneFrame">
-                <img class="heroShot" src="/screenshots/21.png" alt="SmartAlertPlusTT home screen"></img>
+                <!-- Hero confidence screen: #21 -->
+                <img
+                  class="heroShot"
+                  src="/screenshots/21.png"
+                  alt="SmartAlertPlusTT home screen"
+                  loading="eager"
+                  decoding="async"
+                />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="carousel">
-        <div class="track">
-          <div class="slide">
-            <img src="/screenshots/16.png" alt="Setup step 1"></img>
-            <div class="slideCap">Enter your details once.</div>
+      <section class="section3" aria-label="Key benefits">
+        <div class="card">
+          <div class="cardTitle">Fast, clear alerts</div>
+          <p class="cardText">A simple flow that helps people act quickly without confusion.</p>
+        </div>
+        <div class="card">
+          <div class="cardTitle">Built for setup success</div>
+          <p class="cardText">Guided setup, permissions help, and calm troubleshooting.</p>
+        </div>
+        <div class="card">
+          <div class="cardTitle">Privacy-first</div>
+          <p class="cardText">We explain what’s used, what’s not stored, and why it matters.</p>
+        </div>
+      </section>
+
+      <!-- Setup reassurance -->
+      <section class="block" id="how">
+        <div class="blockHeader">
+          <div>
+            <h2>How it works (high level)</h2>
+            <p>
+              This isn’t a complicated system. It’s a calm, guided flow:
+              set up once, stay ready, and when you need help — send one clear SOS alert.
+            </p>
           </div>
-          <div class="slide">
-            <img src="/screenshots/17.png" alt="Setup step 2"></img>
-            <div class="slideCap">Add emergency contacts.</div>
+          <div class="blockMeta">
+            <span class="kicker">Guided setup</span>
+            <span class="kicker">Clear actions</span>
+            <span class="kicker">No confusion</span>
           </div>
-          <div class="slide">
-            <img src="/screenshots/20.png" alt="Permissions center"></img>
-            <div class="slideCap">Fix permissions calmly.</div>
+        </div>
+
+        <div
+          class="carousel"
+          data-carousel
+          aria-label="Setup flow preview"
+        >
+          <div class="track" data-track>
+            <div class="slide">
+              <img src="/screenshots/16.png" alt="Setup step 1 screen" loading="lazy" decoding="async" />
+              <div class="slideCap">Step 1: Enter your profile details once.</div>
+            </div>
+            <div class="slide">
+              <img src="/screenshots/17.png" alt="Setup step 2 screen" loading="lazy" decoding="async" />
+              <div class="slideCap">Step 2: Add emergency contacts and essentials.</div>
+            </div>
+            <div class="slide">
+              <img src="/screenshots/20.png" alt="Permission center screen" loading="lazy" decoding="async" />
+              <div class="slideCap">Permissions Center: quick fixes if anything is missing.</div>
+            </div>
+            <div class="slide">
+              <img src="/screenshots/21.png" alt="Home screen after setup" loading="lazy" decoding="async" />
+              <div class="slideCap">Home: you can see your readiness at a glance.</div>
+            </div>
+          </div>
+
+          <div class="controls" data-controls>
+            <button class="ctrlBtn" type="button" data-prev aria-label="Previous slide">‹ Prev</button>
+            <div class="dotsRow" data-dots aria-label="Slide dots"></div>
+            <button class="ctrlBtn" type="button" data-next aria-label="Next slide">Next ›</button>
           </div>
         </div>
       </section>
 
+      <!-- Install / video -->
+      <section class="block" id="install">
+        <div class="blockHeader">
+          <div>
+            <h2>Install & setup</h2>
+            <p>
+              The install guide video is the main walkthrough. The website stays light on text —
+              just enough to keep you calm and moving forward.
+            </p>
+          </div>
+          <div class="blockMeta">
+            <span class="kicker">Video-first</span>
+            <span class="kicker">Beginner-friendly</span>
+          </div>
+        </div>
+
+        <div style="margin-top: 14px;" class="softPanel">
+          <div class="softTitle">Install Guide Video</div>
+          <p class="softText">
+            Add your video embed here when ready (YouTube or hosted).
+          </p>
+          <p class="hint">
+            Tip: If you use YouTube, I’ll style the embed so it feels like part of the hero system (rounded, frosted, calm).
+          </p>
+        </div>
+      </section>
+
+      <!-- Sending SOS -->
+      <section class="block" aria-label="Sending an SOS">
+        <div class="blockHeader">
+          <div>
+            <h2>Sending an SOS is simple</h2>
+            <p>
+              Under stress, clarity matters. The goal is not “more features” — it’s fewer decisions,
+              and a clear message that reaches your community fast.
+            </p>
+          </div>
+          <div class="blockMeta">
+            <span class="kicker">One clear action</span>
+            <span class="kicker">Fast delivery</span>
+          </div>
+        </div>
+
+        <div
+          class="carousel"
+          data-carousel
+          aria-label="Send SOS preview"
+        >
+          <div class="track" data-track>
+            <div class="slide">
+              <img src="/screenshots/28.png" alt="Send SOS screen" loading="lazy" decoding="async" />
+              <div class="slideCap">Send SOS: clear confirmation before sending.</div>
+            </div>
+            <div class="slide">
+              <img src="/screenshots/29.png" alt="SOS sent confirmation" loading="lazy" decoding="async" />
+              <div class="slideCap">Sent: a calm success message so you’re not guessing.</div>
+            </div>
+            <div class="slide">
+              <img src="/screenshots/30.png" alt="SOS alert delivery example" loading="lazy" decoding="async" />
+              <div class="slideCap">Alert delivery: your community receives the SOS clearly.</div>
+            </div>
+          </div>
+
+          <div class="controls" data-controls>
+            <button class="ctrlBtn" type="button" data-prev aria-label="Previous slide">‹ Prev</button>
+            <div class="dotsRow" data-dots aria-label="Slide dots"></div>
+            <button class="ctrlBtn" type="button" data-next aria-label="Next slide">Next ›</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Receiving SOS -->
+      <section class="block" aria-label="Receiving an SOS">
+        <div class="blockHeader">
+          <div>
+            <h2>Receiving an SOS is clear</h2>
+            <p>
+              Alerts are designed to be readable fast — with details that help people act,
+              not panic.
+            </p>
+          </div>
+          <div class="blockMeta">
+            <span class="kicker">Readable</span>
+            <span class="kicker">Actionable</span>
+          </div>
+        </div>
+
+        <div
+          class="carousel"
+          data-carousel
+          aria-label="Receive SOS preview"
+        >
+          <div class="track" data-track>
+            <div class="slide">
+              <img src="/screenshots/31.png" alt="SOS notification and siren preview" loading="lazy" decoding="async" />
+              <div class="slideCap">Incoming SOS: high-visibility alert so it’s not missed.</div>
+            </div>
+            <div class="slide">
+              <img src="/screenshots/35.png" alt="SOS details screen" loading="lazy" decoding="async" />
+              <div class="slideCap">SOS details: clear info and actions (call, location, etc.).</div>
+            </div>
+          </div>
+
+          <div class="controls" data-controls>
+            <button class="ctrlBtn" type="button" data-prev aria-label="Previous slide">‹ Prev</button>
+            <div class="dotsRow" data-dots aria-label="Slide dots"></div>
+            <button class="ctrlBtn" type="button" data-next aria-label="Next slide">Next ›</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Privacy -->
+      <section class="block" id="privacy">
+        <div class="blockHeader">
+          <div>
+            <h2>Privacy & safety reassurance</h2>
+            <p>
+              We keep explanations simple. You deserve to know what’s happening — without a wall of text.
+              This app is built to respect privacy while still doing its job in an emergency.
+            </p>
+          </div>
+          <div class="blockMeta">
+            <span class="kicker">Transparent</span>
+            <span class="kicker">Respectful</span>
+          </div>
+        </div>
+
+        <div class="supportGrid">
+          <div class="softPanel">
+            <div class="softTitle">What we focus on</div>
+            <p class="softText">
+              Clear SOS delivery, readable alerts, and guidance that works for real people — not just “tech people.”
+            </p>
+          </div>
+          <div class="softPanel">
+            <div class="softTitle">What we avoid</div>
+            <p class="softText">
+              Unnecessary complexity, confusing screens, and anything that makes emergencies harder.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Get the app -->
+      <section class="block" id="get-app">
+        <div class="blockHeader">
+          <div>
+            <h2>Get the app</h2>
+            <p>
+              When your Google Play link is ready, it goes right here — front and center, but still calm.
+            </p>
+          </div>
+          <div class="blockMeta">
+            <span class="kicker">Coming soon</span>
+          </div>
+        </div>
+
+        <div class="ctaRow" style="margin-top: 14px;">
+          <a class="pill primary" href="#" aria-disabled="true">Google Play (link soon)</a>
+          <a class="pill ghost" href="#support">Need help installing?</a>
+        </div>
+
+        <p class="hint">
+          If you want, we can add a tiny note here later: “Not on Google Play yet? Message us for a safe install link.”
+        </p>
+      </section>
+
+      <!-- Support -->
+      <section class="block" id="support">
+        <div class="blockHeader">
+          <div>
+            <h2>Support</h2>
+            <p>
+              If you’re stuck or unsure, you’re not a burden. Reach out — we’ll guide you calmly.
+            </p>
+          </div>
+          <div class="blockMeta">
+            <span class="kicker">Crisp chat</span>
+            <span class="kicker">Friendly help</span>
+          </div>
+        </div>
+
+        <div class="supportGrid">
+          <div class="softPanel">
+            <div class="softTitle">Chat with us</div>
+            <p class="softText">
+              We recommend Crisp chat for the smoothest support.
+              Once you add the Crisp snippet, a chat bubble will appear on this site.
+            </p>
+            <p class="hint">
+              Crisp = users message → you see it in the Crisp dashboard → optional email alerts to your inbox.
+            </p>
+          </div>
+
+          <div class="softPanel">
+            <div class="softTitle">Backup contact</div>
+            <p class="softText">
+              If you want a secondary option later, we can add a lightweight email form (no backend).
+            </p>
+            <p class="hint">
+              We’ll keep it calm and non-pushy: “Need help? Send a message.”
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer">
+        <div>© {new Date().getFullYear()} {APP_NAME}</div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a href="/terms">Terms</a>
+          <a href="/privacy">Privacy</a>
+          <a href="/safety">Safety</a>
+          <a href="/support">Contact</a>
+        </div>
+      </div>
     </div>
+
+    <script>
+      // Lightweight carousel logic (supports swipe + buttons + dots)
+      (function () {
+        const carousels = document.querySelectorAll("[data-carousel]");
+        carousels.forEach((root) => {
+          const track = root.querySelector("[data-track]");
+          const slides = Array.from(track.querySelectorAll(".slide"));
+          const prev = root.querySelector("[data-prev]");
+          const next = root.querySelector("[data-next]");
+          const dotsWrap = root.querySelector("[data-dots]");
+
+          if (!track || slides.length === 0) return;
+
+          // Build dots
+          const dots = slides.map((_, i) => {
+            const b = document.createElement("button");
+            b.className = "dotBtn";
+            b.type = "button";
+            b.setAttribute("aria-label", `Go to slide ${i + 1}`);
+            b.addEventListener("click", () => scrollToIndex(i));
+            dotsWrap.appendChild(b);
+            return b;
+          });
+
+          function nearestIndex() {
+            const center = track.scrollLeft + track.clientWidth / 2;
+            let best = 0, bestDist = Infinity;
+
+            slides.forEach((s, i) => {
+              const left = s.offsetLeft;
+              const mid = left + s.clientWidth / 2;
+              const d = Math.abs(mid - center);
+              if (d < bestDist) { bestDist = d; best = i; }
+            });
+
+            return best;
+          }
+
+          function setActiveDot(i) {
+            dots.forEach((d, idx) => d.setAttribute("aria-current", idx === i ? "true" : "false"));
+          }
+
+          function scrollToIndex(i) {
+            const s = slides[i];
+            if (!s) return;
+            const left = s.offsetLeft - (track.clientWidth - s.clientWidth) / 2;
+            track.scrollTo({ left, behavior: "smooth" });
+            setActiveDot(i);
+          }
+
+          // Buttons
+          prev?.addEventListener("click", () => {
+            const i = nearestIndex();
+            scrollToIndex(Math.max(0, i - 1));
+          });
+
+          next?.addEventListener("click", () => {
+            const i = nearestIndex();
+            scrollToIndex(Math.min(slides.length - 1, i + 1));
+          });
+
+          // Update dots on scroll
+          let raf = 0;
+          track.addEventListener("scroll", () => {
+            cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(() => setActiveDot(nearestIndex()));
+          });
+
+          // Touch drag support (optional, but makes it feel premium)
+          let isDown = false;
+          let startX = 0;
+          let startScroll = 0;
+
+          track.addEventListener("pointerdown", (e) => {
+            isDown = true;
+            startX = e.clientX;
+            startScroll = track.scrollLeft;
+            track.setPointerCapture(e.pointerId);
+          });
+
+          track.addEventListener("pointermove", (e) => {
+            if (!isDown) return;
+            const dx = e.clientX - startX;
+            track.scrollLeft = startScroll - dx;
+          });
+
+          track.addEventListener("pointerup", () => { isDown = false; });
+          track.addEventListener("pointercancel", () => { isDown = false; });
+
+          // Init
+          setActiveDot(0);
+        });
+      })();
+    </script>
   </body>
 </html>
+
 
