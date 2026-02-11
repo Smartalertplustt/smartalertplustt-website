@@ -292,25 +292,7 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
       .track::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.10); border-radius: 999px; }
       .track::-webkit-scrollbar-track { background: rgba(0,0,0,0.20); }
 
-      .slide {
-  flex: 0 0 min(360px, 85%);
-  max-width: 360px;
-  scroll-snap-align: center;
-  border-radius: 18px;
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(0,0,0,0.18);
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 18px 50px rgba(0,0,0,0.45);
-  margin: 0 auto;
-}
-
-@media (max-width: 900px) {
-  .slide {
-    flex-basis: min(320px, 92%);
-    max-width: 320px;
   }
-}
 
 .slide img {
   display: block;
@@ -403,10 +385,37 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
       /* Anchor scroll offset */
       :target { scroll-margin-top: 90px; }
 
-/* ✅ DEBUG: if you don't see a hot pink outline, your new CSS is NOT applying */
-.slide { outline: 4px solid hotpink !important; }
+/* === FINAL CAROUSEL SIZE TUNING === */
 
-  </style>
+/* Make each slide smaller and more phone-like */
+.slide {
+  flex: 0 0 320px;        /* ⬅ controls slide width */
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+/* Ensure images never overflow or crop */
+.slide img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  background: rgba(0,0,0,0.15);
+}
+
+/* Smaller, calmer caption text */
+.slideCap {
+  font-size: 12px;       /* ⬅ smaller text */
+  line-height: 1.4;
+  padding: 8px 10px 10px;
+}
+
+/* Slightly tighter carousel padding */
+.track {
+  padding: 12px;
+}
+
+</style>
   </head>
 
   <body>
