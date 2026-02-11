@@ -424,37 +424,41 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
   box-shadow: 0 18px 50px rgba(0,0,0,0.45);
 }
 
-/* ✅ RING ONLY (no glow behind, no visibility impact) */
-.slide{
+/* === APP-STYLE RAINBOW PULSE RING === */
+.slide {
   position: relative;
   border-radius: 18px;
   overflow: hidden;
 }
 
-/* keep everything inside normal */
-.slide > *{
+/* keep content above the ring */
+.slide > * {
   position: relative;
   z-index: 1;
 }
 
-/* the border ring */
-.slide::before{
-  content:"";
-  position:absolute;
-  inset: 0;                 /* sticks to the edges */
+/* the ring */
+.slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   border-radius: inherit;
-  padding: 2px;             /* ring thickness (try 1px or 2px) */
+
+  /* thickness of the ring */
+  padding: 4px;
+
   background: linear-gradient(
     90deg,
-    #7be0d6,
-    #8aa7ff,
-    #ff5fd7,
-    #ffd36a,
-    #7be0d6
+    #ff3b3b,   /* Red */
+    #ffd36a,   /* Yellow */
+    #4cd964,   /* Green */
+    #5ac8fa,   /* Cyan */
+    #ff5fd7,   /* Magenta */
+    #ff3b3b
   );
   background-size: 300% 300%;
 
-  /* ✅ the ring cut-out (so it never covers the image) */
+  /* ring cutout (no image overlay) */
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
@@ -462,18 +466,31 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
   mask-composite: exclude;
 
   pointer-events: none;
-  z-index: 10;              /* on top of the image */
+  z-index: 10;
+
+  /* 👇 matches rainbowAlpha pulse */
   opacity: 0.35;
-  animation: ringPulse 1800ms ease-in-out infinite alternate;
+  animation: rainbowPulse 1800ms ease-in-out infinite alternate;
 }
 
-@keyframes ringPulse{
-  from { opacity: 0.25; background-position: 0% 50%; }
-  to   { opacity: 0.85; background-position: 100% 50%; }
+/* pulse only — no spinning */
+@keyframes rainbowPulse {
+  from {
+    opacity: 0.35;
+    background-position: 0% 50%;
+  }
+  to {
+    opacity: 0.9;
+    background-position: 100% 50%;
+  }
 }
 
-@media (prefers-reduced-motion: reduce){
-  .slide::before{ animation: none; opacity: 0.65; }
+/* accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .slide::before {
+    animation: none;
+    opacity: 0.6;
+  }
 }
 
 </style>
