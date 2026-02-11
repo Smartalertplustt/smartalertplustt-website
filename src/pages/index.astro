@@ -424,26 +424,26 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
   box-shadow: 0 18px 50px rgba(0,0,0,0.45);
 }
 
-/* === Glow ring (PULSE, sits ON TOP of the slide edges) === */
+/* ✅ RING ONLY (no glow behind, no visibility impact) */
 .slide{
   position: relative;
   border-radius: 18px;
-  overflow: hidden;              /* keep the ring clean */
+  overflow: hidden;
 }
 
-/* Ensure slide content is normal */
+/* keep everything inside normal */
 .slide > *{
   position: relative;
   z-index: 1;
 }
 
-/* Ring on TOP */
+/* the border ring */
 .slide::before{
   content:"";
   position:absolute;
-  inset: 0;                      /* ring aligned to edges */
+  inset: 0;                 /* sticks to the edges */
   border-radius: inherit;
-  padding: 2px;                  /* ring thickness */
+  padding: 2px;             /* ring thickness (try 1px or 2px) */
   background: linear-gradient(
     90deg,
     #7be0d6,
@@ -453,10 +453,8 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
     #7be0d6
   );
   background-size: 300% 300%;
-  opacity: 0.35;
-  animation: glowPulse 1800ms ease-in-out infinite alternate;
 
-  /* Make it a ring, not a fill */
+  /* ✅ the ring cut-out (so it never covers the image) */
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
@@ -464,41 +462,19 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
   mask-composite: exclude;
 
   pointer-events: none;
-  z-index: 5;                    /* ✅ top */
+  z-index: 10;              /* on top of the image */
+  opacity: 0.35;
+  animation: ringPulse 1800ms ease-in-out infinite alternate;
 }
 
-/* Soft bloom UNDER the content */
-.slide::after{
-  content:"";
-  position:absolute;
-  inset: -10px;                  /* a little outside */
-  border-radius: calc(18px + 10px);
-  background:
-    radial-gradient(circle at 30% 20%, rgba(123,224,214,0.22), transparent 55%),
-    radial-gradient(circle at 70% 80%, rgba(138,167,255,0.18), transparent 55%),
-    radial-gradient(circle at 50% 50%, rgba(255,95,215,0.10), transparent 60%);
-  filter: blur(12px);
-  opacity: 0.25;
-  animation: bloomPulse 1800ms ease-in-out infinite alternate;
-
-  pointer-events: none;
-  z-index: 0;                    /* ✅ behind content */
-}
-
-@keyframes glowPulse{
-  from { opacity: 0.25; }
-  to   { opacity: 0.85; }
-}
-@keyframes bloomPulse{
-  from { opacity: 0.12; }
-  to   { opacity: 0.40; }
+@keyframes ringPulse{
+  from { opacity: 0.25; background-position: 0% 50%; }
+  to   { opacity: 0.85; background-position: 100% 50%; }
 }
 
 @media (prefers-reduced-motion: reduce){
-  .slide::before,
-  .slide::after { animation: none; opacity: 0.55; }
+  .slide::before{ animation: none; opacity: 0.65; }
 }
-
 
 </style>
   </head>
