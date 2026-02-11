@@ -293,30 +293,33 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
       .track::-webkit-scrollbar-track { background: rgba(0,0,0,0.20); }
 
       .slide {
-        flex: 0 0 78%;
-        scroll-snap-align: center;
-        border-radius: 18px;
-        border: 1px solid rgba(255,255,255,0.12);
-        background: rgba(0,0,0,0.18);
-        overflow: hidden;
-        position: relative;
-        box-shadow: 0 18px 50px rgba(0,0,0,0.45);
-      }
-      @media (max-width: 900px) { .slide { flex-basis: 92%; } }
-
-     .slide {
-  max-width: 420px;
+  flex: 0 0 min(360px, 85%);
+  max-width: 360px;
+  scroll-snap-align: center;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.18);
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 18px 50px rgba(0,0,0,0.45);
   margin: 0 auto;
-     }
+}
 
-      .slideCap {
-        padding: 10px 12px 12px;
-        border-top: 1px solid rgba(255,255,255,0.10);
-        background: rgba(255,255,255,0.03);
-        color: rgba(234,240,255,0.78);
-        font-size: 13px;
-        line-height: 1.35;
-      }
+@media (max-width: 900px) {
+  .slide {
+    flex-basis: min(320px, 92%);
+    max-width: 320px;
+  }
+}
+
+.slide img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  background: rgba(0,0,0,0.25);
+}
+
 
       .controls {
         position: absolute;
