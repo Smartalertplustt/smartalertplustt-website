@@ -1,14 +1,9 @@
----
-const APP_NAME = "SmartAlertPlusTT";
-const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-first.";
----
-
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{APP_NAME}</title>
+    <title>SmartAlertPlusTT</title>
 
     <style>
       :root {
@@ -234,6 +229,7 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
         border: 1px solid rgba(255,255,255,0.12);
         object-fit: cover;
         background: rgba(0,0,0,0.22);
+        cursor: zoom-in;
       }
 
       /* Feature cards */
@@ -346,6 +342,7 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
         font-size: 13px;
         backdrop-filter: blur(10px);
         user-select: none;
+        cursor: pointer;
       }
       .ctrlBtn:hover { opacity: 0.95; }
 
@@ -381,21 +378,18 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
         position: absolute;
         inset: 0;
         border-radius: inherit;
-
-        /* thickness */
         padding: 3px;
 
         background: linear-gradient(
           90deg,
-          rgba(255,59,59,0.92),   /* Red */
-          rgba(255,211,106,0.92), /* Yellow */
-          rgba(76,217,100,0.92),  /* Green */
-          rgba(90,200,250,0.92),  /* Cyan */
-          rgba(255,95,215,0.92),  /* Magenta */
+          rgba(255,59,59,0.92),
+          rgba(255,211,106,0.92),
+          rgba(76,217,100,0.92),
+          rgba(90,200,250,0.92),
+          rgba(255,95,215,0.92),
           rgba(255,59,59,0.92)
         );
 
-        /* ring cut-out so image is untouched */
         -webkit-mask:
           linear-gradient(#000 0 0) content-box,
           linear-gradient(#000 0 0);
@@ -493,6 +487,8 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
         display:flex;
         gap: 8px;
         align-items:center;
+        flex-wrap: wrap;
+        justify-content: flex-end;
       }
 
       .lbBtn {
@@ -528,13 +524,13 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
         display:flex;
         align-items:center;
         justify-content:center;
-        touch-action: none; /* enables pinch/drag control */
+        touch-action: none;
         cursor: grab;
       }
       .lbStage.dragging { cursor: grabbing; }
 
       .lbImg {
-        max-width: none; /* we control size via transform */
+        max-width: none;
         max-height: none;
         width: auto;
         height: auto;
@@ -542,7 +538,7 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
         transform-origin: 50% 50%;
         will-change: transform;
         user-select: none;
-        pointer-events: none; /* we drag the stage instead */
+        pointer-events: none;
       }
 
       .lbHint {
@@ -574,7 +570,7 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
       <div class="topbar">
         <div class="brand">
           <span class="logoDot"></span>
-          <span>{APP_NAME}</span>
+          <span id="appName">SmartAlertPlusTT</span>
         </div>
 
         <div class="navPills">
@@ -594,7 +590,7 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
               <div class="kicker">Calm under stress</div>
             </div>
 
-            <h1>{tagline}</h1>
+            <h1 id="tagline">Community-ready SOS alerts that are fast, clear, and privacy-first.</h1>
             <p class="sub">
               SmartAlertPlusTT helps communities share urgent SOS alerts quickly and clearly.
               Designed to be understandable under stress — and respectful of your privacy.
@@ -888,7 +884,7 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
       </section>
 
       <div class="footer">
-        <div>© {new Date().getFullYear()} {APP_NAME}</div>
+        <div>© <span id="year"></span> <span id="appName2">SmartAlertPlusTT</span></div>
         <div style="display:flex; gap:12px; flex-wrap:wrap;">
           <a href="/terms">Terms</a>
           <a href="/privacy">Privacy</a>
@@ -926,7 +922,25 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
     </div>
 
     <script>
-      // Lightweight carousel logic (supports swipe + buttons + dots)
+      // ====== Plain-HTML placeholders ======
+      (function(){
+        const APP_NAME = "SmartAlertPlusTT";
+        const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-first.";
+
+        const el1 = document.getElementById("appName");
+        const el2 = document.getElementById("appName2");
+        const elTag = document.getElementById("tagline");
+        const elYear = document.getElementById("year");
+
+        if (el1) el1.textContent = APP_NAME;
+        if (el2) el2.textContent = APP_NAME;
+        if (elTag) elTag.textContent = tagline;
+        if (elYear) elYear.textContent = String(new Date().getFullYear());
+      })();
+
+      // ==========================
+      // CAROUSEL LOGIC
+      // ==========================
       (function () {
         const carousels = document.querySelectorAll("[data-carousel]");
         carousels.forEach((root) => {
@@ -993,12 +1007,15 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
             raf = requestAnimationFrame(() => setActiveDot(nearestIndex()));
           });
 
-          // Touch drag support
+          // Touch drag support (but DO NOT steal taps on images)
           let isDown = false;
           let startX = 0;
           let startScroll = 0;
 
           track.addEventListener("pointerdown", (e) => {
+            // if user taps an image, allow the lightbox click
+            if (e.target && e.target.closest && e.target.closest(".slide img")) return;
+
             isDown = true;
             startX = e.clientX;
             startScroll = track.scrollLeft;
@@ -1082,14 +1099,11 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
           scale = clamp(next, 1, 4);
           range.value = String(scale);
 
-          // If we have an anchor point (wheel/pinch), adjust translation so it zooms towards pointer
+          // Zoom towards pointer if anchor provided
           if (anchorX != null && anchorY != null && prev !== scale) {
-            // Convert anchor into image-local space based on current transform
             const rect = lbStage.getBoundingClientRect();
             const ax = anchorX - (rect.left + rect.width / 2);
             const ay = anchorY - (rect.top + rect.height / 2);
-
-            // Move translation proportionally
             const k = (scale / prev) - 1;
             tx -= ax * k;
             ty -= ay * k;
@@ -1122,8 +1136,7 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
         lbStage.addEventListener("wheel", (e) => {
           if (lb.getAttribute("aria-hidden") !== "false") return;
           e.preventDefault();
-          const delta = e.deltaY;
-          const step = delta > 0 ? -0.12 : 0.12;
+          const step = e.deltaY > 0 ? -0.12 : 0.12;
           setScale(scale + step, e.clientX, e.clientY);
         }, { passive: false });
 
@@ -1144,7 +1157,6 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
           }
 
           if (pointers.size === 2) {
-            // start pinch
             const pts = Array.from(pointers.values());
             const dx = pts[0].x - pts[1].x;
             const dy = pts[0].y - pts[1].y;
@@ -1179,7 +1191,6 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
               const ratio = dist / pinchStartDist;
               const nextScale = pinchStartScale * ratio;
 
-              // anchor at midpoint
               const mx = (pts[0].x + pts[1].x) / 2;
               const my = (pts[0].y + pts[1].y) / 2;
               setScale(nextScale, mx, my);
@@ -1189,12 +1200,13 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
 
         function endPointer(e) {
           pointers.delete(e.pointerId);
+
           if (pointers.size === 0) {
             dragging = false;
             lbStage.classList.remove("dragging");
           }
+
           if (pointers.size === 1) {
-            // if pinch ended, allow drag again
             const only = Array.from(pointers.values())[0];
             startX = only.x;
             startY = only.y;
@@ -1210,13 +1222,20 @@ const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-fi
 
         // Hook every slide image to open lightbox
         document.querySelectorAll(".slide img").forEach((img) => {
-          img.addEventListener("click", () => openLightbox(img.getAttribute("src"), img.getAttribute("alt")));
+          img.addEventListener("click", (e) => {
+            e.stopPropagation();
+            openLightbox(img.getAttribute("src"), img.getAttribute("alt"));
+          });
         });
 
         // Also allow hero preview click
         const hero = document.querySelector(".heroShot");
-        hero?.addEventListener("click", () => openLightbox(hero.getAttribute("src"), hero.getAttribute("alt")));
+        hero?.addEventListener("click", (e) => {
+          e.stopPropagation();
+          openLightbox(hero.getAttribute("src"), hero.getAttribute("alt"));
+        });
       })();
     </script>
   </body>
 </html>
+
