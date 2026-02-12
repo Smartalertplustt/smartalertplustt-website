@@ -265,20 +265,16 @@
       .blockMeta { display:flex; gap: 10px; flex-wrap: wrap; }
 
       /* Carousel (swipeable) */
-      .carousel {
-        margin-top: 14px;
-        border-radius: calc(var(--radius) + 6px);
-        border: 1px solid rgba(255,255,255,0.10);
-        background: rgba(0,0,0,0.18);
-        overflow: hidden;
-        position: relative;
-      }
+      .controls {
+        position: absolute;
+        inset: auto 10px 10px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        pointer-events: none;
+        gap: 10px;
        
-.carousel {
-  padding-bottom: 26px;
-}
-
-   .track {
+      .track {
         display: flex;
         gap: 12px;
         overflow-x: auto;
