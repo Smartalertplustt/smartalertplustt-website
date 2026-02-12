@@ -613,7 +613,33 @@
 filter: brightness(0.90) contrast(1.05);
 }
 
-  </style>
+/* Portable SOS unit: keep image small and balanced */
+#portable-unit .supportGrid{
+  grid-template-columns: 0.9fr 1.1fr;
+  align-items: center;
+}
+
+.portableImg{
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 16px;
+  background: rgba(0,0,0,0.20);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.45);
+}
+
+@media (max-width: 900px){
+  #portable-unit .supportGrid{
+    grid-template-columns: 1fr;
+  }
+  .portableImg{
+    max-width: 200px;
+    margin-bottom: 12px;
+  }
+}
+ </style>
   </head>
 
   <body>
@@ -854,25 +880,13 @@ filter: brightness(0.90) contrast(1.05);
     <div class="softPanel">
       <div class="softTitle">How it works</div>
       <p class="softText">
-        The portable unit is linked to your existing setup.
-        When pressed, it sends the same SOS alert as the app —
+        The portable unit is linked to your existing setup. When pressed, it sends the same SOS alert as the app —
         reaching only the trusted group you’ve already chosen.
       </p>
       <p class="hint">
-        Designed as a backup option for added peace of mind.
-        No screens. No menus. Just a clear, physical action.
+        Designed as a backup option for added peace of mind. No screens. No menus. Just a clear, physical action.
       </p>
-@media (max-width: 900px){
-  #portable-unit .supportGrid{
-    grid-template-columns: 1fr;
-  }
-
-  .portableImg{
-    max-width: 200px;
-    margin-bottom: 12px;
-  }
-}
-  </div>
+    </div>
   </div>
 </section>
 
