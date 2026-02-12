@@ -425,7 +425,44 @@
       .softText { margin: 0; color: var(--muted); line-height: 1.6; }
       .hint { margin-top: 10px; color: rgba(234,240,255,0.62); font-size: 13px; line-height: 1.55; }
 
-      /* Footer */
+      /* === Multicolor ring for Portable SOS image === */
+#portable-unit .softPanel{
+  position: relative;
+  overflow: hidden;
+}
+
+#portable-unit .softPanel::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 3px; /* same thickness as carousel */
+
+  background: linear-gradient(
+    90deg,
+    rgba(255,59,59,0.92),
+    rgba(255,211,106,0.92),
+    rgba(76,217,100,0.92),
+    rgba(90,200,250,0.92),
+    rgba(255,95,215,0.92),
+    rgba(255,59,59,0.92)
+  );
+
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  pointer-events: none;
+  z-index: 2;
+}
+
+#portable-unit img.portableImg{
+  position: relative;
+  z-index: 1;
+}
+ /* Footer */
       .footer{
         margin-top: 34px;
         display:flex;
