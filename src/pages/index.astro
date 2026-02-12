@@ -567,7 +567,30 @@
       @media (prefers-reduced-motion: reduce){
         .lb { backdrop-filter: none; }
       }
-    </style>
+/* ===== Video embed styling (calm + responsive) ===== */
+.videoShell{
+  margin-top: 12px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.18);
+  box-shadow: 0 22px 60px rgba(0,0,0,0.45);
+  overflow: hidden;
+}
+
+.videoFrame{
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 */
+}
+
+.videoFrame iframe{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+   </style>
   </head>
 
   <body>
