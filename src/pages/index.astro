@@ -1,9 +1,13 @@
+const APP_NAME = "SmartAlertPlusTT";
+const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-first.";
+---
+
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SmartAlertPlusTT</title>
+    <title>{APP_NAME}</title>
 
     <style>
       :root {
@@ -229,7 +233,6 @@
         border: 1px solid rgba(255,255,255,0.12);
         object-fit: cover;
         background: rgba(0,0,0,0.22);
-        cursor: zoom-in;
       }
 
       /* Feature cards */
@@ -265,6 +268,40 @@
       .blockMeta { display:flex; gap: 10px; flex-wrap: wrap; }
 
       /* Carousel (swipeable) */
+      .carousel {
+        margin-top: 14px;
+        border-radius: calc(var(--radius) + 6px);
+        border: 1px solid rgba(255,255,255,0.10);
+        background: rgba(0,0,0,0.18);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .track {
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        padding: 14px;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .track::-webkit-scrollbar { height: 10px; }
+      .track::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.10); border-radius: 999px; }
+      .track::-webkit-scrollbar-track { background: rgba(0,0,0,0.20); }
+
+  }
+
+.slide img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  background: rgba(0,0,0,0.25);
+}
+
+
       .controls {
         position: absolute;
         inset: auto 10px 10px 10px;
@@ -273,64 +310,7 @@
         justify-content: space-between;
         pointer-events: none;
         gap: 10px;
-       
-      .track {
-        display: flex;
-        gap: 12px;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
-        padding: 12px; /* slightly tighter */
-        -webkit-overflow-scrolling: touch;
       }
-
-      .track::-webkit-scrollbar { height: 10px; }
-      .track::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.10); border-radius: 999px; }
-      .track::-webkit-scrollbar-track { background: rgba(0,0,0,0.20); }
-
-      /* === FINAL CAROUSEL SIZE + CLARITY === */
-      .slide {
-        flex: 0 0 300px;     /* controls slide width */
-        max-width: 300px;
-        scroll-snap-align: center;
-        border-radius: 18px;
-        background: rgba(0,0,0,0.18);
-        overflow: hidden;
-        position: relative;
-        box-shadow: 0 18px 50px rgba(0,0,0,0.45);
-        border: 0;           /* ring handles the border */
-        user-select: none;
-      }
-      @media (max-width: 900px) { .slide { flex-basis: 290px; max-width: 290px; } }
-
-      /* Make sure images never crop or split */
-      .slide img {
-        display: block;
-        width: 100%;
-        height: auto;
-        object-fit: contain;
-        background: rgba(0,0,0,0.12);
-        cursor: zoom-in;
-      }
-
-      .slideCap {
-        padding: 7px 10px 9px;
-        border-top: 1px solid rgba(255,255,255,0.10);
-        background: rgba(255,255,255,0.03);
-        color: rgba(234,240,255,0.78);
-        font-size: 12px;     /* smaller */
-        line-height: 1.35;   /* tighter */
-      }
-
-     .controls {
-  position: absolute;
-  inset: auto 10px 4px 10px; /* move controls LOWER */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  pointer-events: none;
-  gap: 10px;
-}
 
       .ctrlBtn {
         pointer-events: auto;
@@ -342,7 +322,6 @@
         font-size: 13px;
         backdrop-filter: blur(10px);
         user-select: none;
-        cursor: pointer;
       }
       .ctrlBtn:hover { opacity: 0.95; }
 
@@ -368,37 +347,6 @@
         background: linear-gradient(135deg, var(--accent), var(--accent2));
         border-color: transparent;
         box-shadow: 0 0 18px rgba(123,224,214,0.25);
-      }
-
-      /* === STATIC MULTICOLOR RING (thicker, no animation) === */
-      .slide > * { position: relative; z-index: 1; }
-
-      .slide::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        padding: 3px;
-
-        background: linear-gradient(
-          90deg,
-          rgba(255,59,59,0.92),
-          rgba(255,211,106,0.92),
-          rgba(76,217,100,0.92),
-          rgba(90,200,250,0.92),
-          rgba(255,95,215,0.92),
-          rgba(255,59,59,0.92)
-        );
-
-        -webkit-mask:
-          linear-gradient(#000 0 0) content-box,
-          linear-gradient(#000 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
-
-        pointer-events: none;
-        z-index: 10;
-        opacity: 0.95;
       }
 
       /* Support box */
@@ -436,133 +384,96 @@
       /* Anchor scroll offset */
       :target { scroll-margin-top: 90px; }
 
-      /* =========================
-         LIGHTBOX / MAGNIFIER VIEW
-         ========================= */
-      .lb {
-        position: fixed;
-        inset: 0;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-        background: rgba(0,0,0,0.62);
-        backdrop-filter: blur(10px);
-        padding: 16px;
-      }
-      .lb[aria-hidden="false"] { display: flex; }
+/* === FINAL CAROUSEL SIZE TUNING === */
 
-      .lbPanel {
-        width: min(980px, 100%);
-        height: min(86vh, 760px);
-        border-radius: 22px;
-        border: 1px solid rgba(255,255,255,0.14);
-        background: rgba(7,10,16,0.86);
-        box-shadow: 0 30px 90px rgba(0,0,0,0.65);
-        overflow: hidden;
-        display: grid;
-        grid-template-rows: auto 1fr;
-      }
+/* Make each slide smaller and more phone-like */
+.slide {
+  flex: 0 0 320px;        /* ⬅ controls slide width */
+  max-width: 320px;
+  margin: 0 auto;
+}
 
-      .lbTop {
-        display:flex;
-        align-items:center;
-        justify-content: space-between;
-        gap: 10px;
-        padding: 10px 12px;
-        border-bottom: 1px solid rgba(255,255,255,0.10);
-        background: rgba(255,255,255,0.03);
-      }
+/* Ensure images never overflow or crop */
+.slide img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  background: rgba(0,0,0,0.15);
+}
 
-      .lbTitle {
-        font-size: 13px;
-        color: rgba(234,240,255,0.78);
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        max-width: 55vw;
-      }
+/* Smaller, calmer caption text */
+.slideCap {
+  font-size: 12px;       /* ⬅ smaller text */
+  line-height: 1.4;
+  padding: 8px 10px 10px;
+}
 
-      .lbBtns {
-        display:flex;
-        gap: 8px;
-        align-items:center;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-      }
+/* Slightly tighter carousel padding */
+.track {
+  padding: 12px;
+}
+/* === Animated multicolor glow ring (app-style) === */
+.slide {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.18);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.45);
+}
 
-      .lbBtn {
-        border: 1px solid rgba(255,255,255,0.14);
-        background: rgba(0,0,0,0.40);
-        color: rgba(234,240,255,0.92);
-        padding: 8px 10px;
-        border-radius: 999px;
-        font-size: 13px;
-        cursor: pointer;
-        user-select: none;
-      }
-      .lbBtn:hover { opacity: 0.95; }
+/* === STATIC MULTICOLOR BORDER (NO ANIMATION) === */
+.slide {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+}
 
-      .lbControls {
-        display:flex;
-        gap: 8px;
-        align-items:center;
-      }
+/* keep image + caption above border */
+.slide > * {
+  position: relative;
+  z-index: 1;
+}
 
-      .lbRange {
-        width: 160px;
-      }
+/* border ring only */
+.slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
 
-      .lbBody {
-        position: relative;
-        overflow: hidden;
-      }
+  /* border thickness */
+  padding: 1px;
 
-      .lbStage {
-        position:absolute;
-        inset: 0;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        touch-action: none;
-        cursor: grab;
-      }
-      .lbStage.dragging { cursor: grabbing; }
+  background: linear-gradient(
+    90deg,
+    #ff3b3b,   /* Red */
+    #ffd36a,   /* Yellow */
+    #4cd964,   /* Green */
+    #5ac8fa,   /* Cyan */
+    #ff5fd7,   /* Magenta */
+    #ff3b3b
+  );
 
-      .lbImg {
-        max-width: none;
-        max-height: none;
-        width: auto;
-        height: auto;
-        display:block;
-        transform-origin: 50% 50%;
-        will-change: transform;
-        user-select: none;
-        pointer-events: none;
-      }
+  /* ring cut-out so image is untouched */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
 
-      .lbHint {
-        position:absolute;
-        right: 12px;
-        bottom: 10px;
-        font-size: 12px;
-        color: rgba(234,240,255,0.55);
-        background: rgba(0,0,0,0.35);
-        border: 1px solid rgba(255,255,255,0.10);
-        padding: 6px 10px;
-        border-radius: 999px;
-        backdrop-filter: blur(8px);
-      }
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0.85; /* calm, readable */
+}
 
-      @media (max-width: 560px){
-        .lbTitle { max-width: 52vw; }
-        .lbRange { width: 120px; }
-      }
-
-      @media (prefers-reduced-motion: reduce){
-        .lb { backdrop-filter: none; }
-      }
-    </style>
+/* hard-disable any old glow layers */
+.slide::after {
+  content: none !important;
+  display: none !important;
+}
+</style>
   </head>
 
   <body>
@@ -570,7 +481,7 @@
       <div class="topbar">
         <div class="brand">
           <span class="logoDot"></span>
-          <span id="appName">SmartAlertPlusTT</span>
+          <span>{APP_NAME}</span>
         </div>
 
         <div class="navPills">
@@ -590,10 +501,11 @@
               <div class="kicker">Calm under stress</div>
             </div>
 
-          <h1 id="tagline">Community-ready SOS alerts that are fast, clear, and privacy-first.</h1> <p class="sub">
-SmartAlertPlusTT helps communities share urgent SOS alerts quickly and clearly. 
-Designed to be understandable under stress — and respectful of your privacy. </p>
-
+            <h1>{tagline}</h1>
+            <p class="sub">
+              SmartAlertPlusTT helps communities share urgent SOS alerts quickly and clearly.
+              Designed to be understandable under stress — and respectful of your privacy.
+            </p>
 
             <div class="ctaRow">
               <a class="pill primary" href="#install">Watch Install Guide</a>
@@ -613,6 +525,7 @@ Designed to be understandable under stress — and respectful of your privacy. <
             </div>
             <div class="mediaBody">
               <div class="phoneFrame">
+                <!-- Hero confidence screen: #21 -->
                 <img
                   class="heroShot"
                   src="screenshots/21.png"
@@ -658,7 +571,11 @@ Designed to be understandable under stress — and respectful of your privacy. <
           </div>
         </div>
 
-        <div class="carousel" data-carousel aria-label="Setup flow preview">
+        <div
+          class="carousel"
+          data-carousel
+          aria-label="Setup flow preview"
+        >
           <div class="track" data-track>
             <div class="slide">
               <img src="screenshots/16.png" alt="Setup step 1 screen" loading="lazy" decoding="async" />
@@ -704,7 +621,9 @@ Designed to be understandable under stress — and respectful of your privacy. <
 
         <div style="margin-top: 14px;" class="softPanel">
           <div class="softTitle">Install Guide Video</div>
-          <p class="softText">Add your video embed here when ready (YouTube or hosted).</p>
+          <p class="softText">
+            Add your video embed here when ready (YouTube or hosted).
+          </p>
           <p class="hint">
             Tip: If you use YouTube, I’ll style the embed so it feels like part of the hero system (rounded, frosted, calm).
           </p>
@@ -727,7 +646,11 @@ Designed to be understandable under stress — and respectful of your privacy. <
           </div>
         </div>
 
-        <div class="carousel" data-carousel aria-label="Send SOS preview">
+        <div
+          class="carousel"
+          data-carousel
+          aria-label="Send SOS preview"
+        >
           <div class="track" data-track>
             <div class="slide">
               <img src="screenshots/28.png" alt="Send SOS screen" loading="lazy" decoding="async" />
@@ -767,7 +690,11 @@ Designed to be understandable under stress — and respectful of your privacy. <
           </div>
         </div>
 
-        <div class="carousel" data-carousel aria-label="Receive SOS preview">
+        <div
+          class="carousel"
+          data-carousel
+          aria-label="Receive SOS preview"
+        >
           <div class="track" data-track>
             <div class="slide">
               <img src="screenshots/31.png" alt="SOS notification and siren preview" loading="lazy" decoding="async" />
@@ -883,7 +810,7 @@ Designed to be understandable under stress — and respectful of your privacy. <
       </section>
 
       <div class="footer">
-        <div>© <span id="year"></span> <span id="appName2">SmartAlertPlusTT</span></div>
+        <div>© {new Date().getFullYear()} {APP_NAME}</div>
         <div style="display:flex; gap:12px; flex-wrap:wrap;">
           <a href="/terms">Terms</a>
           <a href="/privacy">Privacy</a>
@@ -893,53 +820,8 @@ Designed to be understandable under stress — and respectful of your privacy. <
       </div>
     </div>
 
-    <!-- ========== Lightbox / Magnifier markup ========== -->
-    <div class="lb" id="lightbox" aria-hidden="true" role="dialog" aria-label="Screenshot viewer">
-      <div class="lbPanel" role="document">
-        <div class="lbTop">
-          <div class="lbTitle" id="lbTitle">Screenshot</div>
-
-          <div class="lbBtns">
-            <div class="lbControls" aria-label="Zoom controls">
-              <button class="lbBtn" type="button" id="lbZoomOut" aria-label="Zoom out">−</button>
-              <input class="lbRange" id="lbZoom" type="range" min="1" max="4" value="1" step="0.05" aria-label="Zoom slider" />
-              <button class="lbBtn" type="button" id="lbZoomIn" aria-label="Zoom in">+</button>
-              <button class="lbBtn" type="button" id="lbReset" aria-label="Reset zoom">Reset</button>
-            </div>
-
-            <button class="lbBtn" type="button" id="lbClose" aria-label="Close viewer">Close</button>
-          </div>
-        </div>
-
-        <div class="lbBody">
-          <div class="lbStage" id="lbStage" aria-label="Zoom and pan area">
-            <img class="lbImg" id="lbImg" alt="" />
-          </div>
-          <div class="lbHint">Wheel / pinch to zoom • Drag to pan • Esc to close</div>
-        </div>
-      </div>
-    </div>
-
     <script>
-      // ====== Plain-HTML placeholders ======
-      (function(){
-        const APP_NAME = "SmartAlertPlusTT";
-        const tagline = "Community-ready SOS alerts that are fast, clear, and privacy-first.";
-
-        const el1 = document.getElementById("appName");
-        const el2 = document.getElementById("appName2");
-        const elTag = document.getElementById("tagline");
-        const elYear = document.getElementById("year");
-
-        if (el1) el1.textContent = APP_NAME;
-        if (el2) el2.textContent = APP_NAME;
-        if (elTag) elTag.textContent = tagline;
-        if (elYear) elYear.textContent = String(new Date().getFullYear());
-      })();
-
-      // ==========================
-      // CAROUSEL LOGIC
-      // ==========================
+      // Lightweight carousel logic (supports swipe + buttons + dots)
       (function () {
         const carousels = document.querySelectorAll("[data-carousel]");
         carousels.forEach((root) => {
@@ -1006,15 +888,12 @@ Designed to be understandable under stress — and respectful of your privacy. <
             raf = requestAnimationFrame(() => setActiveDot(nearestIndex()));
           });
 
-          // Touch drag support (but DO NOT steal taps on images)
+          // Touch drag support (optional, but makes it feel premium)
           let isDown = false;
           let startX = 0;
           let startScroll = 0;
 
           track.addEventListener("pointerdown", (e) => {
-            // if user taps an image, allow the lightbox click
-            if (e.target && e.target.closest && e.target.closest(".slide img")) return;
-
             isDown = true;
             startX = e.clientX;
             startScroll = track.scrollLeft;
@@ -1034,207 +913,8 @@ Designed to be understandable under stress — and respectful of your privacy. <
           setActiveDot(0);
         });
       })();
-
-      // ===========================
-      // LIGHTBOX / MAGNIFY VIEW
-      // ===========================
-      (function () {
-        const lb = document.getElementById("lightbox");
-        const lbImg = document.getElementById("lbImg");
-        const lbTitle = document.getElementById("lbTitle");
-        const lbStage = document.getElementById("lbStage");
-
-        const btnClose = document.getElementById("lbClose");
-        const btnIn = document.getElementById("lbZoomIn");
-        const btnOut = document.getElementById("lbZoomOut");
-        const btnReset = document.getElementById("lbReset");
-        const range = document.getElementById("lbZoom");
-
-        let scale = 1;
-        let tx = 0;
-        let ty = 0;
-
-        // For dragging
-        let dragging = false;
-        let startX = 0;
-        let startY = 0;
-        let startTx = 0;
-        let startTy = 0;
-
-        // For pinch
-        let pointers = new Map(); // id -> {x,y}
-        let pinchStartDist = 0;
-        let pinchStartScale = 1;
-
-        function openLightbox(src, alt) {
-          lbImg.src = src;
-          lbImg.alt = alt || "Screenshot";
-          lbTitle.textContent = alt || "Screenshot";
-
-          scale = 1;
-          tx = 0;
-          ty = 0;
-          range.value = "1";
-          applyTransform();
-
-          lb.setAttribute("aria-hidden", "false");
-          document.body.style.overflow = "hidden";
-        }
-
-        function closeLightbox() {
-          lb.setAttribute("aria-hidden", "true");
-          document.body.style.overflow = "";
-          lbImg.src = "";
-        }
-
-        function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
-
-        function applyTransform() {
-          lbImg.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
-        }
-
-        function setScale(next, anchorX, anchorY) {
-          const prev = scale;
-          scale = clamp(next, 1, 4);
-          range.value = String(scale);
-
-          // Zoom towards pointer if anchor provided
-          if (anchorX != null && anchorY != null && prev !== scale) {
-            const rect = lbStage.getBoundingClientRect();
-            const ax = anchorX - (rect.left + rect.width / 2);
-            const ay = anchorY - (rect.top + rect.height / 2);
-            const k = (scale / prev) - 1;
-            tx -= ax * k;
-            ty -= ay * k;
-          }
-
-          applyTransform();
-        }
-
-        // Click outside panel closes
-        lb.addEventListener("pointerdown", (e) => {
-          if (e.target === lb) closeLightbox();
-        });
-
-        btnClose.addEventListener("click", closeLightbox);
-
-        document.addEventListener("keydown", (e) => {
-          if (lb.getAttribute("aria-hidden") === "false" && e.key === "Escape") closeLightbox();
-        });
-
-        btnIn.addEventListener("click", () => setScale(scale + 0.2));
-        btnOut.addEventListener("click", () => setScale(scale - 0.2));
-        btnReset.addEventListener("click", () => { scale = 1; tx = 0; ty = 0; range.value = "1"; applyTransform(); });
-
-        range.addEventListener("input", () => {
-          const next = parseFloat(range.value || "1");
-          setScale(next);
-        });
-
-        // Wheel zoom
-        lbStage.addEventListener("wheel", (e) => {
-          if (lb.getAttribute("aria-hidden") !== "false") return;
-          e.preventDefault();
-          const step = e.deltaY > 0 ? -0.12 : 0.12;
-          setScale(scale + step, e.clientX, e.clientY);
-        }, { passive: false });
-
-        // Drag / Pinch using pointer events
-        lbStage.addEventListener("pointerdown", (e) => {
-          if (lb.getAttribute("aria-hidden") !== "false") return;
-
-          pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
-          lbStage.setPointerCapture(e.pointerId);
-
-          if (pointers.size === 1) {
-            dragging = true;
-            lbStage.classList.add("dragging");
-            startX = e.clientX;
-            startY = e.clientY;
-            startTx = tx;
-            startTy = ty;
-          }
-
-          if (pointers.size === 2) {
-            const pts = Array.from(pointers.values());
-            const dx = pts[0].x - pts[1].x;
-            const dy = pts[0].y - pts[1].y;
-            pinchStartDist = Math.hypot(dx, dy);
-            pinchStartScale = scale;
-            dragging = false;
-            lbStage.classList.remove("dragging");
-          }
-        });
-
-        lbStage.addEventListener("pointermove", (e) => {
-          if (lb.getAttribute("aria-hidden") !== "false") return;
-          if (!pointers.has(e.pointerId)) return;
-
-          pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
-
-          if (pointers.size === 1 && dragging) {
-            const dx = e.clientX - startX;
-            const dy = e.clientY - startY;
-            tx = startTx + dx;
-            ty = startTy + dy;
-            applyTransform();
-          }
-
-          if (pointers.size === 2) {
-            const pts = Array.from(pointers.values());
-            const dx = pts[0].x - pts[1].x;
-            const dy = pts[0].y - pts[1].y;
-            const dist = Math.hypot(dx, dy);
-
-            if (pinchStartDist > 0) {
-              const ratio = dist / pinchStartDist;
-              const nextScale = pinchStartScale * ratio;
-
-              const mx = (pts[0].x + pts[1].x) / 2;
-              const my = (pts[0].y + pts[1].y) / 2;
-              setScale(nextScale, mx, my);
-            }
-          }
-        });
-
-        function endPointer(e) {
-          pointers.delete(e.pointerId);
-
-          if (pointers.size === 0) {
-            dragging = false;
-            lbStage.classList.remove("dragging");
-          }
-
-          if (pointers.size === 1) {
-            const only = Array.from(pointers.values())[0];
-            startX = only.x;
-            startY = only.y;
-            startTx = tx;
-            startTy = ty;
-            dragging = true;
-            lbStage.classList.add("dragging");
-          }
-        }
-
-        lbStage.addEventListener("pointerup", endPointer);
-        lbStage.addEventListener("pointercancel", endPointer);
-
-        // Hook every slide image to open lightbox
-        document.querySelectorAll(".slide img").forEach((img) => {
-          img.addEventListener("click", (e) => {
-            e.stopPropagation();
-            openLightbox(img.getAttribute("src"), img.getAttribute("alt"));
-          });
-        });
-
-        // Also allow hero preview click
-        const hero = document.querySelector(".heroShot");
-        hero?.addEventListener("click", (e) => {
-          e.stopPropagation();
-          openLightbox(hero.getAttribute("src"), hero.getAttribute("alt"));
-        });
-      })();
     </script>
   </body>
 </html>
+
 
