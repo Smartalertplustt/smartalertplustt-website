@@ -862,7 +862,17 @@ filter: brightness(0.90) contrast(1.05);
         Designed as a backup option for added peace of mind.
         No screens. No menus. Just a clear, physical action.
       </p>
-    </div>
+@media (max-width: 900px){
+  #portable-unit .supportGrid{
+    grid-template-columns: 1fr;
+  }
+
+  .portableImg{
+    max-width: 200px;
+    margin-bottom: 12px;
+  }
+}
+  </div>
   </div>
 </section>
 
