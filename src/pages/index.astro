@@ -1411,19 +1411,22 @@ filter: brightness(0.90) contrast(1.05);
         });
       })();
     
-    <!-- Crisp Chat -->
-    <script type="text/javascript">
-      window.$crisp=[];
-      window.CRISP_WEBSITE_ID="8ce73c5c-e208-4d65-89d7-77e523f6c45f";
-      (function(){
-        d=document;
-        s=d.createElement("script");
-        s.src="https://client.crisp.chat/l.js";
-        s.async=1;
-        d.getElementsByTagName("head")[0].appendChild(s);
-      })();
-    </script>
-  </body>
+    <!-- Crisp Chat (Astro-safe) -->
+<script is:inline>
+  window.$crisp = window.$crisp || [];
+  window.CRISP_WEBSITE_ID = "8ce73c5c-e208-4d65-89d7-77e523f6c45f";
+</script>
+
+<script is:inline>
+  (function () {
+    var d = document;
+    var s = d.createElement("script");
+    s.src = "https://client.crisp.chat/l.js";
+    s.async = true;
+    d.head.appendChild(s);
+  })();
+</script>
+</body>
 </html>
 
 
