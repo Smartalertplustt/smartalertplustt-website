@@ -272,12 +272,8 @@
         background: rgba(0,0,0,0.18);
         overflow: hidden;
         position: relative;
+        padding-bottom: 28px;
       }
-
-      .carousel {
-  padding-bottom: 28px;
-}
-
 
       .track {
         display: flex;
@@ -285,7 +281,7 @@
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         scroll-behavior: smooth;
-        padding: 12px; /* slightly tighter */
+        padding: 12px;
         -webkit-overflow-scrolling: touch;
       }
 
@@ -293,9 +289,8 @@
       .track::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.10); border-radius: 999px; }
       .track::-webkit-scrollbar-track { background: rgba(0,0,0,0.20); }
 
-      /* === FINAL CAROUSEL SIZE + CLARITY === */
       .slide {
-        flex: 0 0 300px;     /* controls slide width */
+        flex: 0 0 300px;
         max-width: 300px;
         scroll-snap-align: center;
         border-radius: 18px;
@@ -303,12 +298,11 @@
         overflow: hidden;
         position: relative;
         box-shadow: 0 18px 50px rgba(0,0,0,0.45);
-        border: 0;           /* ring handles the border */
+        border: 0;
         user-select: none;
       }
       @media (max-width: 900px) { .slide { flex-basis: 290px; max-width: 290px; } }
 
-      /* Make sure images never crop or split */
       .slide img {
         display: block;
         width: 100%;
@@ -323,8 +317,8 @@
         border-top: 1px solid rgba(255,255,255,0.10);
         background: rgba(255,255,255,0.03);
         color: rgba(234,240,255,0.78);
-        font-size: 12px;     /* smaller */
-        line-height: 1.35;   /* tighter */
+        font-size: 12px;
+        line-height: 1.35;
       }
 
       .controls {
@@ -375,16 +369,14 @@
         box-shadow: 0 0 18px rgba(123,224,214,0.25);
       }
 
-      /* === STATIC MULTICOLOR RING (thicker, no animation) === */
+      /* Static multicolor ring */
       .slide > * { position: relative; z-index: 1; }
-
       .slide::before {
         content: "";
         position: absolute;
         inset: 0;
         border-radius: inherit;
         padding: 3px;
-
         background: linear-gradient(
           90deg,
           rgba(255,59,59,0.92),
@@ -394,13 +386,11 @@
           rgba(255,95,215,0.92),
           rgba(255,59,59,0.92)
         );
-
         -webkit-mask:
           linear-gradient(#000 0 0) content-box,
           linear-gradient(#000 0 0);
         -webkit-mask-composite: xor;
         mask-composite: exclude;
-
         pointer-events: none;
         z-index: 10;
         opacity: 0.95;
@@ -425,44 +415,37 @@
       .softText { margin: 0; color: var(--muted); line-height: 1.6; }
       .hint { margin-top: 10px; color: rgba(234,240,255,0.62); font-size: 13px; line-height: 1.55; }
 
-      /* === Multicolor ring for Portable SOS image === */
-#portable-unit .softPanel{
-  position: relative;
-  overflow: hidden;
-}
+      /* Multicolor ring for Portable SOS image panel */
+      #portable-unit .softPanel{
+        position: relative;
+        overflow: hidden;
+      }
+      #portable-unit .softPanel::before{
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 3px;
+        background: linear-gradient(
+          90deg,
+          rgba(255,59,59,0.92),
+          rgba(255,211,106,0.92),
+          rgba(76,217,100,0.92),
+          rgba(90,200,250,0.92),
+          rgba(255,95,215,0.92),
+          rgba(255,59,59,0.92)
+        );
+        -webkit-mask:
+          linear-gradient(#000 0 0) content-box,
+          linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+        z-index: 2;
+      }
+      #portable-unit img.portableImg{ position: relative; z-index: 1; }
 
-#portable-unit .softPanel::before{
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 3px; /* same thickness as carousel */
-
-  background: linear-gradient(
-    90deg,
-    rgba(255,59,59,0.92),
-    rgba(255,211,106,0.92),
-    rgba(76,217,100,0.92),
-    rgba(90,200,250,0.92),
-    rgba(255,95,215,0.92),
-    rgba(255,59,59,0.92)
-  );
-
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-
-  pointer-events: none;
-  z-index: 2;
-}
-
-#portable-unit img.portableImg{
-  position: relative;
-  z-index: 1;
-}
- /* Footer */
+      /* Footer */
       .footer{
         margin-top: 34px;
         display:flex;
@@ -475,12 +458,9 @@
       }
       .footer a { color: rgba(234,240,255,0.78); }
 
-      /* Anchor scroll offset */
       :target { scroll-margin-top: 90px; }
 
-      /* =========================
-         LIGHTBOX / MAGNIFIER VIEW
-         ========================= */
+      /* Lightbox */
       .lb {
         position: fixed;
         inset: 0;
@@ -551,14 +531,9 @@
         align-items:center;
       }
 
-      .lbRange {
-        width: 160px;
-      }
+      .lbRange { width: 160px; }
 
-      .lbBody {
-        position: relative;
-        overflow: hidden;
-      }
+      .lbBody { position: relative; overflow: hidden; }
 
       .lbStage {
         position:absolute;
@@ -601,82 +576,65 @@
         .lbRange { width: 120px; }
       }
 
-      @media (prefers-reduced-motion: reduce){
-        .lb { backdrop-filter: none; }
+      /* Video embed */
+      .videoShell{
+        margin-top: 12px;
+        border-radius: 18px;
+        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(20, 24, 32, 0.65);
+        box-shadow: 0 22px 60px rgba(0,0,0,0.45);
+        overflow: hidden;
+        backdrop-filter: blur(8px);
       }
-/* ===== Video embed styling (calm + responsive) ===== */
-.videoShell{
-  margin-top: 12px;
-  border-radius: 18px;
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(20, 24, 32, 0.65); /* soft dark gray-blue */
-  box-shadow: 0 22px 60px rgba(0,0,0,0.45);
-  overflow: hidden;
-  backdrop-filter: blur(8px);
-}
 
-.videoFrame{
-  position: relative;
-  width: 100%;
-  padding-top: 56.25%;
-  background: linear-gradient(
-    180deg,
-    rgba(32, 36, 46, 0.95),
-    rgba(22, 26, 34, 0.95)
-  );
-}
+      .videoFrame{
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%;
+        background: linear-gradient(180deg, rgba(32, 36, 46, 0.95), rgba(22, 26, 34, 0.95));
+      }
 
-/* soft mask behind iframe */
-.videoFrame::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background: radial-gradient(
-    120% 120% at 50% 50%,
-    rgba(40, 46, 60, 0.6),
-    rgba(20, 24, 32, 0.9)
-  );
-  z-index: 0;
-}
+      .videoFrame::before{
+        content:"";
+        position:absolute;
+        inset:0;
+        background: radial-gradient(120% 120% at 50% 50%, rgba(40, 46, 60, 0.6), rgba(20, 24, 32, 0.9));
+        z-index: 0;
+      }
 
-.videoFrame iframe{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  border:0;
-  z-index: 1;
-  background: transparent;
-filter: brightness(0.90) contrast(1.05);
-}
+      .videoFrame iframe{
+        position:absolute;
+        inset:0;
+        width:100%;
+        height:100%;
+        border:0;
+        z-index: 1;
+        background: transparent;
+        filter: brightness(0.90) contrast(1.05);
+      }
 
-/* Portable SOS unit: keep image small and balanced */
-#portable-unit .supportGrid{
-  grid-template-columns: 0.9fr 1.1fr;
-  align-items: center;
-}
+      /* Portable unit image sizing */
+      #portable-unit .supportGrid{
+        grid-template-columns: 0.9fr 1.1fr;
+        align-items: center;
+      }
 
-.portableImg{
-  width: 100%;
-  max-width: 220px;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-  border-radius: 16px;
-  background: rgba(0,0,0,0.20);
-  box-shadow: 0 18px 45px rgba(0,0,0,0.45);
-}
+      .portableImg{
+        width: 100%;
+        max-width: 220px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        border-radius: 16px;
+        background: rgba(0,0,0,0.20);
+        box-shadow: 0 18px 45px rgba(0,0,0,0.45);
+      }
 
-@media (max-width: 900px){
-  #portable-unit .supportGrid{
-    grid-template-columns: 1fr;
-  }
-  .portableImg{
-    max-width: 200px;
-    margin-bottom: 12px;
-  }
-}
- </style>
+      @media (max-width: 900px){
+        #portable-unit .supportGrid{ grid-template-columns: 1fr; }
+        .portableImg{ max-width: 200px; margin-bottom: 12px; }
+      }
+    </style>
   </head>
 
   <body>
@@ -705,12 +663,11 @@ filter: brightness(0.90) contrast(1.05);
             </div>
 
             <h1 id="tagline">SOS alerts for the people you trust — fast, clear, and privacy-first.</h1>
-<p class="sub">
-  SmartAlertPlusTT helps you share urgent SOS alerts with your chosen groups —
-  whether that’s family, friends, coworkers, or a local community.
-  Designed to be understandable under stress and respectful of your privacy.
-</p>
-
+            <p class="sub">
+              SmartAlertPlusTT helps you share urgent SOS alerts with your chosen groups —
+              whether that’s family, friends, coworkers, or a local community.
+              Designed to be understandable under stress and respectful of your privacy.
+            </p>
 
             <div class="ctaRow">
               <a class="pill primary" href="#install">Watch Install Guide</a>
@@ -758,7 +715,7 @@ filter: brightness(0.90) contrast(1.05);
         </div>
       </section>
 
-      <!-- Setup reassurance -->
+      <!-- How it works -->
       <section class="block" id="how">
         <div class="blockHeader">
           <div>
@@ -819,27 +776,27 @@ filter: brightness(0.90) contrast(1.05);
           </div>
         </div>
 
-       <div style="margin-top: 14px;" class="softPanel">
-  <div class="softTitle">Install Guide Video</div>
+        <div style="margin-top: 14px;" class="softPanel">
+          <div class="softTitle">Install Guide Video</div>
 
-  <div class="videoShell" aria-label="Install guide video">
-    <div class="videoFrame">
-      <iframe
-        src="https://player.vimeo.com/video/1164354194?h=0&title=0&byline=0&portrait=0"
-        frameborder="0"
-        allow="autoplay; fullscreen; picture-in-picture"
-        allowfullscreen
-        loading="lazy"
-        title="SmartAlertPlusTT Install Guide"
-      ></iframe>
-    </div>
-  </div>
+          <div class="videoShell" aria-label="Install guide video">
+            <div class="videoFrame">
+              <iframe
+                src="https://player.vimeo.com/video/1164354194?h=0&title=0&byline=0&portrait=0"
+                frameborder="0"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowfullscreen
+                loading="lazy"
+                title="SmartAlertPlusTT Install Guide"
+              ></iframe>
+            </div>
+          </div>
 
-  <p class="hint">
-    Tip: Tap fullscreen if the text is small. This video stays clean (no ads, calm player).
-  </p>
-</div>
-  </section>
+          <p class="hint">
+            Tip: Tap fullscreen if the text is small. This video stays clean (no ads, calm player).
+          </p>
+        </div>
+      </section>
 
       <!-- Sending SOS -->
       <section class="block" aria-label="Sending an SOS">
@@ -859,11 +816,11 @@ filter: brightness(0.90) contrast(1.05);
 
         <div class="carousel" data-carousel aria-label="Send SOS preview">
           <div class="track" data-track>
-        <div class="slide">
-              <img src="screenshots/27.png" alt="Send SOS screen" loading="lazy" decoding="async" />
+            <div class="slide">
+              <img src="screenshots/27.png" alt="SOS widget on home screen" loading="lazy" decoding="async" />
               <div class="slideCap">Firstly: Tap on SOS widget located on your home-screen.</div>
-            </div> 
-          <div class="slide">
+            </div>
+            <div class="slide">
               <img src="screenshots/28.png" alt="Send SOS screen" loading="lazy" decoding="async" />
               <div class="slideCap">Send SOS: Select group and add message before sending.</div>
             </div>
@@ -885,49 +842,49 @@ filter: brightness(0.90) contrast(1.05);
         </div>
       </section>
 
-<!-- Portable SOS Unit -->
-<section class="block" id="portable-unit">
-  <div class="blockHeader">
-    <div>
-      <h2>Portable SOS Unit (Optional)</h2>
-      <p>
-        For moments when a phone isn’t nearby or usable, the portable SOS unit
-        gives you a simple physical backup — one press sends an SOS to your
-        pre-programmed group.
-      </p>
-    </div>
-    <div class="blockMeta">
-      <span class="kicker">Rechargeable</span>
-      <span class="kicker">One-press SOS</span>
-      <span class="kicker">Works with your group</span>
-    </div>
-  </div>
+      <!-- Portable SOS Unit -->
+      <section class="block" id="portable-unit">
+        <div class="blockHeader">
+          <div>
+            <h2>Portable SOS Unit (Optional)</h2>
+            <p>
+              For moments when a phone isn’t nearby or usable, the portable SOS unit
+              gives you a simple physical backup — one press sends an SOS to your
+              pre-programmed group.
+            </p>
+          </div>
+          <div class="blockMeta">
+            <span class="kicker">Rechargeable</span>
+            <span class="kicker">One-press SOS</span>
+            <span class="kicker">Works with your group</span>
+          </div>
+        </div>
 
-  <div class="supportGrid">
-    <div class="softPanel">
-      <img
-        src="screenshots/37.png"
-        alt="Portable SOS unit keychain device"
-        class="portableImg"
-        loading="lazy"
-        decoding="async"
-      />
-    </div>
+        <div class="supportGrid">
+          <div class="softPanel">
+            <img
+              src="screenshots/37.png"
+              alt="Portable SOS unit keychain device"
+              class="portableImg"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
 
-    <div class="softPanel">
-      <div class="softTitle">How it works</div>
-      <p class="softText">
-        The portable unit is linked to your existing setup. When pressed, it sends the same SOS alert as the app —
-        reaching only the trusted group you’ve already chosen.
-      </p>
-      <p class="hint">
-        Designed as a backup option for added peace of mind. No screens. No menus. Just a clear, physical action.
-      </p>
-    </div>
-  </div>
-</section>
+          <div class="softPanel">
+            <div class="softTitle">How it works</div>
+            <p class="softText">
+              The portable unit is linked to your existing setup. When pressed, it sends the same SOS alert as the app —
+              reaching only the trusted group you’ve already chosen.
+            </p>
+            <p class="hint">
+              Designed as a backup option for added peace of mind. No screens. No menus. Just a clear, physical action.
+            </p>
+          </div>
+        </div>
+      </section>
 
- <!-- Receiving SOS -->
+      <!-- Receiving SOS -->
       <section class="block" aria-label="Receiving an SOS">
         <div class="blockHeader">
           <div>
@@ -1069,7 +1026,7 @@ filter: brightness(0.90) contrast(1.05);
       </div>
     </div>
 
-    <!-- ========== Lightbox / Magnifier markup ========== -->
+    <!-- Lightbox markup -->
     <div class="lb" id="lightbox" aria-hidden="true" role="dialog" aria-label="Screenshot viewer">
       <div class="lbPanel" role="document">
         <div class="lbTop">
@@ -1097,7 +1054,7 @@ filter: brightness(0.90) contrast(1.05);
     </div>
 
     <script>
-      // ====== Plain-HTML placeholders ======
+      // ====== Plain placeholders ======
       (function(){
         const APP_NAME = "SmartAlertPlusTT";
         const tagline = "SOS alerts for the people you trust — fast, clear, and privacy-first.";
@@ -1164,7 +1121,6 @@ filter: brightness(0.90) contrast(1.05);
             setActiveDot(i);
           }
 
-          // Buttons
           prev?.addEventListener("click", () => {
             const i = nearestIndex();
             scrollToIndex(Math.max(0, i - 1));
@@ -1175,20 +1131,18 @@ filter: brightness(0.90) contrast(1.05);
             scrollToIndex(Math.min(slides.length - 1, i + 1));
           });
 
-          // Update dots on scroll
           let raf = 0;
           track.addEventListener("scroll", () => {
             cancelAnimationFrame(raf);
             raf = requestAnimationFrame(() => setActiveDot(nearestIndex()));
           });
 
-          // Touch drag support (but DO NOT steal taps on images)
+          // Touch drag support (don’t steal taps on images)
           let isDown = false;
           let startX = 0;
           let startScroll = 0;
 
           track.addEventListener("pointerdown", (e) => {
-            // if user taps an image, allow the lightbox click
             if (e.target && e.target.closest && e.target.closest(".slide img")) return;
 
             isDown = true;
@@ -1206,7 +1160,6 @@ filter: brightness(0.90) contrast(1.05);
           track.addEventListener("pointerup", () => { isDown = false; });
           track.addEventListener("pointercancel", () => { isDown = false; });
 
-          // Init
           setActiveDot(0);
         });
       })();
@@ -1230,15 +1183,13 @@ filter: brightness(0.90) contrast(1.05);
         let tx = 0;
         let ty = 0;
 
-        // For dragging
         let dragging = false;
         let startX = 0;
         let startY = 0;
         let startTx = 0;
         let startTy = 0;
 
-        // For pinch
-        let pointers = new Map(); // id -> {x,y}
+        let pointers = new Map();
         let pinchStartDist = 0;
         let pinchStartScale = 1;
 
@@ -1274,7 +1225,6 @@ filter: brightness(0.90) contrast(1.05);
           scale = clamp(next, 1, 4);
           range.value = String(scale);
 
-          // Zoom towards pointer if anchor provided
           if (anchorX != null && anchorY != null && prev !== scale) {
             const rect = lbStage.getBoundingClientRect();
             const ax = anchorX - (rect.left + rect.width / 2);
@@ -1287,7 +1237,6 @@ filter: brightness(0.90) contrast(1.05);
           applyTransform();
         }
 
-        // Click outside panel closes
         lb.addEventListener("pointerdown", (e) => {
           if (e.target === lb) closeLightbox();
         });
@@ -1307,7 +1256,6 @@ filter: brightness(0.90) contrast(1.05);
           setScale(next);
         });
 
-        // Wheel zoom
         lbStage.addEventListener("wheel", (e) => {
           if (lb.getAttribute("aria-hidden") !== "false") return;
           e.preventDefault();
@@ -1315,7 +1263,6 @@ filter: brightness(0.90) contrast(1.05);
           setScale(scale + step, e.clientX, e.clientY);
         }, { passive: false });
 
-        // Drag / Pinch using pointer events
         lbStage.addEventListener("pointerdown", (e) => {
           if (lb.getAttribute("aria-hidden") !== "false") return;
 
@@ -1365,7 +1312,6 @@ filter: brightness(0.90) contrast(1.05);
             if (pinchStartDist > 0) {
               const ratio = dist / pinchStartDist;
               const nextScale = pinchStartScale * ratio;
-
               const mx = (pts[0].x + pts[1].x) / 2;
               const my = (pts[0].y + pts[1].y) / 2;
               setScale(nextScale, mx, my);
@@ -1395,7 +1341,6 @@ filter: brightness(0.90) contrast(1.05);
         lbStage.addEventListener("pointerup", endPointer);
         lbStage.addEventListener("pointercancel", endPointer);
 
-        // Hook every slide image to open lightbox
         document.querySelectorAll(".slide img").forEach((img) => {
           img.addEventListener("click", (e) => {
             e.stopPropagation();
@@ -1403,44 +1348,29 @@ filter: brightness(0.90) contrast(1.05);
           });
         });
 
-        // Also allow hero preview click
         const hero = document.querySelector(".heroShot");
         hero?.addEventListener("click", (e) => {
           e.stopPropagation();
           openLightbox(hero.getAttribute("src"), hero.getAttribute("alt"));
         });
       })();
+    </script>
 
-<!-- Crisp Chat (Astro-safe) -->
-<script is:inline>
-  window.$crisp = window.$crisp || [];
-  window.CRISP_WEBSITE_ID = "8ce73c5c-e208-4d65-89d7-77e523f6c45f";
-</script>
-
-<script is:inline>
-  (function () {
-    var d = document;
-    var s = d.createElement("script");
-    s.src = "https://client.crisp.chat/l.js";
-    s.async = true;
-    d.head.appendChild(s);
-  })();
-</script>
-   
-<!-- Crisp Chat -->
+    <!-- Crisp Chat (correct placement: OUTSIDE the big script) -->
     <script type="text/javascript">
-      window.$crisp=[];
-      window.CRISP_WEBSITE_ID="8ce73c5c-e208-4d65-89d7-77e523f6c45f";
-      (function(){
-        d=document;
-        s=d.createElement("script");
-        s.src="https://client.crisp.chat/l.js";
-        s.async=1;
+      window.$crisp = window.$crisp || [];
+      window.CRISP_WEBSITE_ID = "8ce73c5c-e208-4d65-89d7-77e523f6c45f";
+      (function () {
+        var d = document;
+        var s = d.createElement("script");
+        s.src = "https://client.crisp.chat/l.js";
+        s.async = true;
         d.getElementsByTagName("head")[0].appendChild(s);
       })();
     </script>
   </body>
 </html>
+
 
 
 
