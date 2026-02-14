@@ -679,7 +679,34 @@
 
 .msgBtn:hover{ opacity: 0.95; }
 
-  </style>
+/* Success message styling */
+.msgSuccess{
+  margin-top: 18px; /* creates space from content above */
+  padding: 16px;
+  border-radius: 16px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(123,224,214,0.18),
+    rgba(123,224,214,0.10)
+  );
+
+  border: 1px solid rgba(123,224,214,0.45);
+  box-shadow: 0 12px 40px rgba(123,224,214,0.18);
+}
+
+/* Make the title stand out */
+.msgSuccess .softTitle{
+  color: var(--accent);
+  font-weight: 850;
+  margin-bottom: 6px;
+}
+
+/* Keep body text calm */
+.msgSuccess .softText{
+  color: rgba(234,240,255,0.9);
+}
+ </style>
   </head>
 
   <body>
