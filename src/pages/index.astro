@@ -1109,11 +1109,22 @@
           Send message
         </button>
 
-        <p class="hint" style="margin-top:10px;">
-          We only use this information to reply to your request.
+                <p class="hint" style="margin-top:10px;">
+          We usually reply within <strong>24–48 hours</strong>.
         </p>
       </form>
-    </div>
+
+      <!-- Success message (hidden until submit) -->
+      <div class="msgSuccess" id="msgSuccess" style="display:none;">
+        <div class="softTitle">💚 Message sent</div>
+        <p class="softText">
+          Thanks for reaching out. We’ll get back to you within <strong>24–48 hours</strong>.
+        </p>
+        <p class="hint">
+          If you don’t see our reply, please check your spam/promotions folder.
+        </p>
+      </div>
+      </div>
 
     <!-- Reassurance panel -->
     <div class="softPanel">
@@ -1469,9 +1480,51 @@
           openLightbox(hero.getAttribute("src"), hero.getAttribute("alt"));
         });
       })();
-    </script>
+
+    <script>
+  (function () {
+    const form = document.querySelector('#support form.msgForm');
+    const success = document.getElementById('msgSuccess');
+
+    if (!form || !success) return;
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const btn = form.querySelector('button[type="submit"]');
+      const originalText = btn ? btn.textContent : '';
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Sending...';
+      }
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (!res.ok) throw new Error('Form submit failed');
+
+        form.reset();
+        form.style.display = 'none';
+        success.style.display = 'block';
+      } catch (err) {
+        // If anything goes wrong, fall back to normal submit (redirect)
+        form.removeEventListener('submit', arguments.callee);
+        form.submit();
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = originalText;
+        }
+      }
+    });
+  })();
+</script>
   </body>
-</html>
+    </html>
 
   
 
