@@ -634,7 +634,52 @@
         #portable-unit .supportGrid{ grid-template-columns: 1fr; }
         .portableImg{ max-width: 200px; margin-bottom: 12px; }
       }
-    </style>
+
+  /* ===== Support message form ===== */
+.msgForm{
+  margin-top: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.msgLabel{
+  display: grid;
+  gap: 6px;
+  color: rgba(234,240,255,0.78);
+  font-size: 13px;
+}
+
+.msgInput, .msgTextarea{
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(0,0,0,0.25);
+  color: rgba(234,240,255,0.95);
+  padding: 10px 12px;
+  outline: none;
+}
+
+.msgTextarea{ resize: vertical; min-height: 120px; }
+
+.msgInput:focus, .msgTextarea:focus{
+  border-color: rgba(123,224,214,0.55);
+  box-shadow: 0 0 0 3px rgba(123,224,214,0.12);
+}
+
+.msgBtn{
+  width: fit-content;
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-weight: 750;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #071015;
+  cursor: pointer;
+}
+
+.msgBtn:hover{ opacity: 0.95; }
+
+  </style>
   </head>
 
   <body>
@@ -1001,44 +1046,89 @@
         </p>
       </section>
 
-      <!-- Support -->
-      <section class="block" id="support">
-        <div class="blockHeader">
-          <div>
-            <h2>Support</h2>
-            <p>
-              If you’re stuck or unsure, you’re not a burden. Reach out — we’ll guide you calmly.
-            </p>
-          </div>
-          <div class="blockMeta">
-            <span class="kicker">Crisp chat</span>
-            <span class="kicker">Friendly help</span>
-          </div>
-        </div>
+    <!-- Support -->
+<section class="block" id="support">
+  <div class="blockHeader">
+    <div>
+      <h2>Support</h2>
+      <p>
+        If you’re stuck or unsure, you’re not a burden. Send us a message and we’ll guide you calmly.
+      </p>
+    </div>
+    <div class="blockMeta">
+      <span class="kicker">Email support</span>
+      <span class="kicker">Privacy-first</span>
+    </div>
+  </div>
 
-        <div class="supportGrid">
-          <div class="softPanel">
-            <div class="softTitle">Chat with us</div>
-            <p class="softText">
-              We recommend Crisp chat for the smoothest support.
-              Once you add the Crisp snippet, a chat bubble will appear on this site.
-            </p>
-            <p class="hint">
-              Crisp = users message → you see it in the Crisp dashboard → optional email alerts to your inbox.
-            </p>
-          </div>
+  <div class="supportGrid">
+    <!-- Message box -->
+    <div class="softPanel">
+      <div class="softTitle">Send us a message</div>
+      <p class="softText">
+        This goes directly to the SmartAlertPlusTT team. No bots, no tracking — just a clear way to reach us.
+      </p>
 
-          <div class="softPanel">
-            <div class="softTitle">Backup contact</div>
-            <p class="softText">
-              If you want a secondary option later, we can add a lightweight email form (no backend).
-            </p>
-            <p class="hint">
-              We’ll keep it calm and non-pushy: “Need help? Send a message.”
-            </p>
-          </div>
-        </div>
-      </section>
+      <form
+        class="msgForm"
+        action="https://formspree.io/f/XXXXYYYY"
+        method="POST"
+      >
+        <label class="msgLabel">
+          Your name (optional)
+          <input
+            class="msgInput"
+            type="text"
+            name="name"
+            autocomplete="name"
+          />
+        </label>
+
+        <label class="msgLabel">
+          Your email (so we can reply)
+          <input
+            class="msgInput"
+            type="email"
+            name="email"
+            autocomplete="email"
+            required
+          />
+        </label>
+
+        <label class="msgLabel">
+          Your message
+          <textarea
+            class="msgTextarea"
+            name="message"
+            rows="5"
+            required
+          ></textarea>
+        </label>
+
+        <button class="msgBtn" type="submit">
+          Send message
+        </button>
+
+        <p class="hint" style="margin-top:10px;">
+          We only use this information to reply to your request.
+        </p>
+      </form>
+    </div>
+
+    <!-- Reassurance panel -->
+    <div class="softPanel">
+      <div class="softTitle">What to expect</div>
+      <p class="softText">
+        We’ll read your message and reply by email as soon as we can.
+        There’s no live chat pressure — just thoughtful, human support.
+      </p>
+      <p class="hint">
+        If something feels urgent or confusing, say so in your message.
+      </p>
+    </div>
+  </div>
+</section>
+
 
       <div class="footer">
         <div>© <span id="year"></span> <span id="appName2">SmartAlertPlusTT</span></div>
