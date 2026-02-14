@@ -21,7 +21,19 @@
         --radius2: 999px;
       }
 
-      * { box-sizing: border-box; }
+       .brand span {
+       font-size: 20px;       /* default was ~16px */
+       font-weight: 900;      /* slightly stronger */
+       letter-spacing: 0.3px;
+     }
+   
+   @media (max-width: 900px) {
+     .brand span {
+      font-size: 18px;     /* mobile-friendly */
+     }
+   }
+
+    * { box-sizing: border-box; }
       html, body { height: 100%; }
       body {
         margin: 0;
