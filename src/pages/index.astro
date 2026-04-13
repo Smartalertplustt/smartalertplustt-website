@@ -1,291 +1,335 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SmartAlertPlusTT</title>
+    <meta
+      name="description"
+      content="SmartAlertPlusTT is a cross-platform emergency alert app that helps you notify trusted contacts quickly with your details and location when it matters most."
+    />
 
     <style>
       :root {
         color-scheme: dark;
         --bg: #070a10;
         --panel: rgba(255, 255, 255, 0.04);
-        --panel2: rgba(255, 255, 255, 0.06);
-        --border: rgba(255, 255, 255, 0.10);
-        --text: #eaf0ff;
-        --muted: rgba(234, 240, 255, 0.72);
+        --border: rgba(255, 255, 255, 0.1);
+        --text: #ecf2ff;
+        --muted: rgba(236, 242, 255, 0.72);
+        --muted-soft: rgba(236, 242, 255, 0.58);
         --accent: #7be0d6;
-        --accent2: #8aa7ff;
+        --accent-2: #8aa7ff;
         --shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
         --radius: 22px;
-        --radius2: 999px;
+        --pill: 999px;
       }
 
-       .brand span {
-       font-size: 20px;       /* default was ~16px */
-       font-weight: 900;      /* slightly stronger */
-       letter-spacing: 0.3px;
-       text-shadow: 0 0 14px rgba(123,224,214,0.35);
-     }
-   
-   @media (max-width: 900px) {
-     .brand span {
-      font-size: 18px;     /* mobile-friendly */
-     }
-   }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; min-height: 100%; }
 
-    * { box-sizing: border-box; }
-      html, body { height: 100%; }
       body {
-        margin: 0;
-        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        background: radial-gradient(1200px 800px at 50% -10%, rgba(138,167,255,0.20), transparent 60%),
-                    radial-gradient(900px 700px at 20% 15%, rgba(123,224,214,0.18), transparent 55%),
-                    radial-gradient(800px 600px at 85% 30%, rgba(123,224,214,0.10), transparent 55%),
-                    var(--bg);
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background:
+          radial-gradient(1200px 800px at 50% -10%, rgba(138, 167, 255, 0.18), transparent 60%),
+          radial-gradient(900px 700px at 20% 15%, rgba(123, 224, 214, 0.14), transparent 55%),
+          radial-gradient(800px 600px at 85% 30%, rgba(123, 224, 214, 0.08), transparent 55%),
+          var(--bg);
         color: var(--text);
       }
 
       a { color: inherit; text-decoration: none; }
-      a:hover { opacity: 0.92; }
+      img { max-width: 100%; display: block; }
 
-      .wrap { max-width: 1100px; margin: 0 auto; padding: 22px 18px 70px; }
+      .wrap {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 22px 18px 72px;
+      }
 
-      /* Top nav */
       .topbar {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 14px;
-        padding: 10px 10px;
+        gap: 16px;
+        padding: 10px 10px 0;
+        flex-wrap: wrap;
       }
 
       .brand {
         display: flex;
         align-items: center;
         gap: 10px;
-        font-weight: 850;
+        font-weight: 900;
         letter-spacing: 0.2px;
       }
 
+      .brand span:last-child {
+        font-size: 20px;
+        text-shadow: 0 0 14px rgba(123, 224, 214, 0.25);
+      }
+
       .logoDot {
-        width: 12px; height: 12px; border-radius: 999px;
-        background: linear-gradient(135deg, var(--accent), var(--accent2));
-        box-shadow: 0 0 22px rgba(123,224,214,0.35);
+        width: 12px;
+        height: 12px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        box-shadow: 0 0 22px rgba(123, 224, 214, 0.35);
       }
 
       .navPills {
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
         align-items: center;
         justify-content: flex-end;
+        gap: 10px;
       }
 
       .pill {
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         gap: 8px;
-        padding: 9px 13px;
-        border-radius: var(--radius2);
+        padding: 10px 14px;
+        border-radius: var(--pill);
         border: 1px solid var(--border);
-        background: rgba(255,255,255,0.03);
+        background: rgba(255, 255, 255, 0.03);
+        color: rgba(236, 242, 255, 0.92);
         font-size: 13px;
-        color: rgba(234,240,255,0.90);
         backdrop-filter: blur(10px);
       }
 
       .pill.primary {
         border: 0;
-        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
         color: #071015;
-        font-weight: 750;
+        font-weight: 800;
       }
 
-      .pill.ghost {
-        background: rgba(255,255,255,0.04);
-        border: 1px solid rgba(255,255,255,0.12);
-        color: rgba(234,240,255,0.92);
-      }
+      .pill.ghost { background: rgba(255, 255, 255, 0.04); }
 
-      /* Hero */
       .hero {
         margin-top: 18px;
-        border-radius: calc(var(--radius) + 8px);
-        border: 1px solid var(--border);
-        background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-        box-shadow: var(--shadow);
-        overflow: hidden;
         position: relative;
+        overflow: hidden;
+        border-radius: 30px;
+        border: 1px solid var(--border);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+        box-shadow: var(--shadow);
       }
 
-      .hero::before{
-        content:"";
-        position:absolute; inset:-2px;
-        background: radial-gradient(800px 300px at 50% 0%, rgba(123,224,214,0.15), transparent 60%),
-                    radial-gradient(700px 350px at 90% 30%, rgba(138,167,255,0.16), transparent 60%);
-        pointer-events:none;
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        pointer-events: none;
+        background:
+          radial-gradient(800px 300px at 50% 0%, rgba(123, 224, 214, 0.15), transparent 60%),
+          radial-gradient(700px 350px at 90% 30%, rgba(138, 167, 255, 0.16), transparent 60%);
       }
 
       .heroInner {
         position: relative;
-        padding: 34px 22px 22px;
         display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
-        gap: 18px;
+        grid-template-columns: 1.12fr 0.88fr;
+        gap: 22px;
         align-items: center;
+        padding: 36px 24px 24px;
       }
 
-      @media (max-width: 900px) {
-        .heroInner { grid-template-columns: 1fr; padding: 26px 18px 18px; }
-      }
-
-      .kickerRow{
-        display:flex;
-        gap:10px;
-        flex-wrap:wrap;
-        align-items:center;
+      .kickerRow {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
         margin-bottom: 14px;
       }
 
-      .kicker{
-        display:inline-flex;
-        align-items:center;
-        gap:8px;
+      .kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
         padding: 7px 11px;
-        border-radius: var(--radius2);
-        border: 1px solid rgba(255,255,255,0.14);
-        background: rgba(0,0,0,0.18);
+        border-radius: var(--pill);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(0, 0, 0, 0.18);
+        color: rgba(236, 242, 255, 0.88);
         font-size: 12px;
-        color: rgba(234,240,255,0.88);
       }
 
-      .kicker strong { color: rgba(234,240,255,0.95); }
-
-      h1{
-        margin: 0 0 10px;
-        font-size: 44px;
-        line-height: 1.05;
-        letter-spacing: -0.6px;
+      h1 {
+        margin: 0 0 12px;
+        font-size: 46px;
+        line-height: 1.04;
+        letter-spacing: -0.7px;
       }
-      @media (max-width: 900px) { h1 { font-size: 36px; } }
 
       .sub {
-        margin: 0 0 16px;
-        color: var(--muted);
-        line-height: 1.55;
-        font-size: 15px;
+        margin: 0 0 14px;
         max-width: 60ch;
+        color: var(--muted);
+        line-height: 1.62;
+        font-size: 15px;
       }
 
-      .ctaRow{
-        display:flex;
-        gap: 10px;
+      .ctaRow {
+        display: flex;
         flex-wrap: wrap;
+        gap: 10px;
         align-items: center;
-        margin-top: 12px;
+        margin-top: 14px;
       }
 
-      /* Hero “mock” media */
-      .mediaCard{
-        border-radius: var(--radius);
-        border: 1px solid rgba(255,255,255,0.12);
-        background: rgba(0,0,0,0.20);
-        box-shadow: 0 25px 70px rgba(0,0,0,0.55);
-        overflow: hidden;
+      .heroMeta {
+        margin-top: 18px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .miniStat {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 12px;
+      }
+
+      .miniStat strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 13px;
+      }
+
+      .miniStat span {
+        color: var(--muted-soft);
+        font-size: 12px;
+        line-height: 1.5;
+      }
+
+      .mediaCard {
         position: relative;
+        overflow: hidden;
+        border-radius: var(--radius);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(0, 0, 0, 0.2);
+        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.55);
       }
 
       .mediaTop {
-        display:flex;
-        align-items:center;
+        display: flex;
+        align-items: center;
         justify-content: space-between;
         padding: 12px 14px;
-        border-bottom: 1px solid rgba(255,255,255,0.10);
-        background: rgba(255,255,255,0.03);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.03);
       }
 
-      .dots { display:flex; gap:6px; }
-      .dot { width: 8px; height: 8px; border-radius: 999px; opacity: 0.65; background: rgba(255,255,255,0.35); }
-      .dot:nth-child(1){ background: rgba(255,85,85,0.7); }
-      .dot:nth-child(2){ background: rgba(255,201,76,0.7); }
-      .dot:nth-child(3){ background: rgba(93,223,138,0.7); }
+      .dots { display: flex; gap: 6px; }
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        opacity: 0.7;
+        background: rgba(255, 255, 255, 0.35);
+      }
+      .dot:nth-child(1) { background: rgba(255, 85, 85, 0.7); }
+      .dot:nth-child(2) { background: rgba(255, 201, 76, 0.7); }
+      .dot:nth-child(3) { background: rgba(93, 223, 138, 0.7); }
 
-      .mediaBody{ padding: 18px 16px 20px; }
+      .mediaBody { padding: 18px 16px 20px; }
 
-      .phoneFrame{
-        border-radius: 26px;
-        border: 1px solid rgba(255,255,255,0.14);
-        background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-        height: 360px;
-        display:flex;
-        align-items:center;
-        justify-content:center;
+      .phoneFrame {
         position: relative;
-        overflow:hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        height: 400px;
+        border-radius: 26px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
       }
 
-      .phoneFrame::before{
-        content:"";
-        position:absolute; inset:-40px;
-        background: radial-gradient(300px 220px at 35% 25%, rgba(123,224,214,0.25), transparent 60%),
-                    radial-gradient(260px 200px at 65% 70%, rgba(138,167,255,0.20), transparent 60%);
-        filter: blur(2px);
+      .phoneFrame::before {
+        content: "";
+        position: absolute;
+        inset: -40px;
+        background:
+          radial-gradient(300px 220px at 35% 25%, rgba(123, 224, 214, 0.25), transparent 60%),
+          radial-gradient(260px 200px at 65% 70%, rgba(138, 167, 255, 0.2), transparent 60%);
         opacity: 0.9;
       }
 
       .heroShot {
         position: relative;
         width: 82%;
-        height: 86%;
-        border-radius: 18px;
-        border: 1px solid rgba(255,255,255,0.12);
+        height: 88%;
         object-fit: cover;
-        background: rgba(0,0,0,0.22);
+        border-radius: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(0, 0, 0, 0.2);
         cursor: zoom-in;
       }
 
-      /* Feature cards */
       .section3 {
         margin-top: 26px;
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 12px;
       }
-      @media (max-width: 900px){ .section3 { grid-template-columns: 1fr; } }
 
-      .card{
+      .card,
+      .block,
+      .softPanel {
         border-radius: var(--radius);
-        border: 1px solid rgba(255,255,255,0.10);
-        background: rgba(255,255,255,0.03);
-        padding: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.03);
       }
 
-      .cardTitle{ font-weight: 800; margin-bottom: 6px; }
-      .cardText{ color: var(--muted); margin: 0; line-height: 1.55; }
+      .card { padding: 18px; }
+      .cardTitle { margin-bottom: 8px; font-weight: 800; }
+      .cardText { margin: 0; color: var(--muted); line-height: 1.6; }
 
-      /* Standard sections */
       .block {
         margin-top: 18px;
-        border-radius: var(--radius);
-        border: 1px solid rgba(255,255,255,0.10);
-        background: rgba(255,255,255,0.03);
         padding: 18px;
       }
-      .block h2{ margin: 0 0 8px; font-size: 20px; letter-spacing: -0.2px; }
-      .block p{ margin: 0; color: var(--muted); line-height: 1.6; max-width: 78ch; }
-      .blockHeader { display:flex; align-items:flex-start; justify-content:space-between; gap: 14px; flex-wrap: wrap; }
-      .blockMeta { display:flex; gap: 10px; flex-wrap: wrap; }
 
-      /* Carousel (swipeable) */
+      .blockHeader {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+
+      .block h2 {
+        margin: 0 0 8px;
+        font-size: 20px;
+        letter-spacing: -0.2px;
+      }
+
+      .block p {
+        margin: 0;
+        max-width: 78ch;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .blockMeta {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
       .carousel {
-        margin-top: 14px;
-        border-radius: calc(var(--radius) + 6px);
-        border: 1px solid rgba(255,255,255,0.10);
-        background: rgba(0,0,0,0.18);
-        overflow: hidden;
         position: relative;
+        overflow: hidden;
+        margin-top: 14px;
         padding-bottom: 28px;
+        border-radius: calc(var(--radius) + 6px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.18);
       }
 
       .track {
@@ -299,39 +343,63 @@
       }
 
       .track::-webkit-scrollbar { height: 10px; }
-      .track::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.10); border-radius: 999px; }
-      .track::-webkit-scrollbar-track { background: rgba(0,0,0,0.20); }
+      .track::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 999px;
+      }
+      .track::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); }
 
       .slide {
+        position: relative;
         flex: 0 0 300px;
         max-width: 300px;
         scroll-snap-align: center;
-        border-radius: 18px;
-        background: rgba(0,0,0,0.18);
         overflow: hidden;
-        position: relative;
-        box-shadow: 0 18px 50px rgba(0,0,0,0.45);
-        border: 0;
+        border-radius: 18px;
+        background: rgba(0, 0, 0, 0.18);
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
         user-select: none;
       }
-      @media (max-width: 900px) { .slide { flex-basis: 290px; max-width: 290px; } }
+
+      .slide::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        border-radius: inherit;
+        padding: 3px;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 59, 59, 0.92),
+          rgba(255, 211, 106, 0.92),
+          rgba(76, 217, 100, 0.92),
+          rgba(90, 200, 250, 0.92),
+          rgba(255, 95, 215, 0.92),
+          rgba(255, 59, 59, 0.92)
+        );
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+      }
+
+      .slide > * { position: relative; z-index: 2; }
 
       .slide img {
-        display: block;
         width: 100%;
         height: auto;
         object-fit: contain;
-        background: rgba(0,0,0,0.12);
+        background: rgba(0, 0, 0, 0.12);
         cursor: zoom-in;
       }
 
       .slideCap {
-        padding: 7px 10px 9px;
-        border-top: 1px solid rgba(255,255,255,0.10);
-        background: rgba(255,255,255,0.03);
-        color: rgba(234,240,255,0.78);
+        padding: 8px 10px 10px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.03);
+        color: rgba(236, 242, 255, 0.78);
         font-size: 12px;
-        line-height: 1.35;
+        line-height: 1.4;
       }
 
       .controls {
@@ -340,231 +408,328 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        pointer-events: none;
         gap: 10px;
+        pointer-events: none;
       }
+
+      .ctrlBtn,
+      .lbBtn,
+      .msgBtn { cursor: pointer; }
 
       .ctrlBtn {
         pointer-events: auto;
-        border: 1px solid rgba(255,255,255,0.14);
-        background: rgba(0,0,0,0.40);
-        color: rgba(234,240,255,0.92);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(0, 0, 0, 0.4);
+        color: rgba(236, 242, 255, 0.92);
         padding: 8px 10px;
-        border-radius: var(--radius2);
+        border-radius: var(--pill);
         font-size: 13px;
         backdrop-filter: blur(10px);
-        user-select: none;
-        cursor: pointer;
       }
-      .ctrlBtn:hover { opacity: 0.95; }
 
       .dotsRow {
         pointer-events: auto;
         display: inline-flex;
-        gap: 8px;
+        flex-wrap: wrap;
         align-items: center;
         justify-content: center;
-        flex-wrap: wrap;
+        gap: 8px;
       }
 
       .dotBtn {
         width: 8px;
         height: 8px;
-        border-radius: 999px;
-        border: 1px solid rgba(255,255,255,0.18);
-        background: rgba(255,255,255,0.10);
         padding: 0;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.1);
         cursor: pointer;
       }
-      .dotBtn[aria-current="true"]{
-        background: linear-gradient(135deg, var(--accent), var(--accent2));
+
+      .dotBtn[aria-current="true"] {
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
         border-color: transparent;
-        box-shadow: 0 0 18px rgba(123,224,214,0.25);
+        box-shadow: 0 0 18px rgba(123, 224, 214, 0.25);
       }
 
-      /* Static multicolor ring */
-      .slide > * { position: relative; z-index: 1; }
-      .slide::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        padding: 3px;
-        background: linear-gradient(
-          90deg,
-          rgba(255,59,59,0.92),
-          rgba(255,211,106,0.92),
-          rgba(76,217,100,0.92),
-          rgba(90,200,250,0.92),
-          rgba(255,95,215,0.92),
-          rgba(255,59,59,0.92)
-        );
-        -webkit-mask:
-          linear-gradient(#000 0 0) content-box,
-          linear-gradient(#000 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
-        pointer-events: none;
-        z-index: 10;
-        opacity: 0.95;
-      }
-
-      /* Support box */
       .supportGrid {
         margin-top: 12px;
         display: grid;
         grid-template-columns: 1.05fr 0.95fr;
         gap: 12px;
       }
-      @media (max-width: 900px){ .supportGrid { grid-template-columns: 1fr; } }
 
-      .softPanel {
-        border-radius: var(--radius);
-        border: 1px solid rgba(255,255,255,0.10);
-        background: rgba(255,255,255,0.03);
-        padding: 16px;
-      }
-      .softTitle { font-weight: 800; margin-bottom: 6px; }
+      .softPanel { padding: 16px; }
+      .softTitle { margin-bottom: 6px; font-weight: 800; }
       .softText { margin: 0; color: var(--muted); line-height: 1.6; }
-      .hint { margin-top: 10px; color: rgba(234,240,255,0.62); font-size: 13px; line-height: 1.55; }
 
-      /* Multicolor ring for Portable SOS image panel */
-      #portable-unit .softPanel{
+      .hint {
+        margin-top: 10px;
+        color: rgba(236, 242, 255, 0.62);
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      #portable-unit .supportGrid {
+        grid-template-columns: 0.9fr 1.1fr;
+        align-items: center;
+      }
+
+      #portable-unit .softPanel {
         position: relative;
         overflow: hidden;
       }
-      #portable-unit .softPanel::before{
+
+      #portable-unit .softPanel::before {
         content: "";
         position: absolute;
         inset: 0;
+        z-index: 1;
+        pointer-events: none;
         border-radius: inherit;
         padding: 3px;
         background: linear-gradient(
           90deg,
-          rgba(255,59,59,0.92),
-          rgba(255,211,106,0.92),
-          rgba(76,217,100,0.92),
-          rgba(90,200,250,0.92),
-          rgba(255,95,215,0.92),
-          rgba(255,59,59,0.92)
+          rgba(255, 59, 59, 0.92),
+          rgba(255, 211, 106, 0.92),
+          rgba(76, 217, 100, 0.92),
+          rgba(90, 200, 250, 0.92),
+          rgba(255, 95, 215, 0.92),
+          rgba(255, 59, 59, 0.92)
         );
-        -webkit-mask:
-          linear-gradient(#000 0 0) content-box,
-          linear-gradient(#000 0 0);
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
         -webkit-mask-composite: xor;
         mask-composite: exclude;
-        pointer-events: none;
-        z-index: 2;
       }
-      #portable-unit img.portableImg{ position: relative; z-index: 1; }
 
-      /* Footer */
-      .footer{
-        margin-top: 34px;
-        display:flex;
-        flex-wrap:wrap;
+      .portableImg {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        max-width: 220px;
+        margin: 0 auto;
+        border-radius: 16px;
+        background: rgba(0, 0, 0, 0.2);
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+      }
+
+      .videoShell {
+        margin-top: 12px;
+        overflow: hidden;
+        border-radius: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(20, 24, 32, 0.65);
+        box-shadow: 0 22px 60px rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(8px);
+      }
+
+      .videoFrame {
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%;
+        background: linear-gradient(180deg, rgba(32, 36, 46, 0.95), rgba(22, 26, 34, 0.95));
+      }
+
+      .videoFrame::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(120% 120% at 50% 50%, rgba(40, 46, 60, 0.6), rgba(20, 24, 32, 0.9));
+      }
+
+      .videoFrame iframe {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background: transparent;
+        filter: brightness(0.9) contrast(1.05);
+      }
+
+      .storeRow {
+        display: flex;
+        flex-wrap: wrap;
         gap: 12px;
-        align-items:center;
-        justify-content: space-between;
-        color: rgba(234,240,255,0.62);
+        align-items: center;
+        margin-top: 18px;
+      }
+
+      .storeCard {
+        min-width: 220px;
+        border-radius: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.03);
+        padding: 16px;
+      }
+
+      .storeCard strong {
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      .storeCard span {
+        display: block;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      .msgForm {
+        display: grid;
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .msgLabel {
+        display: grid;
+        gap: 6px;
+        color: rgba(236, 242, 255, 0.78);
         font-size: 13px;
       }
-      .footer a { color: rgba(234,240,255,0.78); }
 
+      .msgInput,
+      .msgTextarea {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 14px;
+        outline: none;
+        background: rgba(0, 0, 0, 0.25);
+        color: rgba(236, 242, 255, 0.95);
+      }
+
+      .msgTextarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+
+      .msgInput:focus,
+      .msgTextarea:focus {
+        border-color: rgba(123, 224, 214, 0.55);
+        box-shadow: 0 0 0 3px rgba(123, 224, 214, 0.12);
+      }
+
+      .msgBtn {
+        width: fit-content;
+        border: 0;
+        border-radius: 999px;
+        padding: 10px 14px;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        color: #071015;
+      }
+
+      .msgSuccess {
+        display: none;
+        margin-top: 18px;
+        padding: 16px;
+        border-radius: 16px;
+        background: linear-gradient(180deg, rgba(123, 224, 214, 0.18), rgba(123, 224, 214, 0.1));
+        border: 1px solid rgba(123, 224, 214, 0.45);
+        box-shadow: 0 12px 40px rgba(123, 224, 214, 0.18);
+      }
+
+      .msgSuccess .softTitle { color: var(--accent); }
+
+      .footer {
+        margin-top: 34px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        color: rgba(236, 242, 255, 0.62);
+        font-size: 13px;
+      }
+
+      .footer a { color: rgba(236, 242, 255, 0.78); }
       :target { scroll-margin-top: 90px; }
 
-      /* Lightbox */
       .lb {
         position: fixed;
         inset: 0;
+        z-index: 9999;
         display: none;
         align-items: center;
         justify-content: center;
-        z-index: 9999;
-        background: rgba(0,0,0,0.62);
-        backdrop-filter: blur(10px);
         padding: 16px;
+        background: rgba(0, 0, 0, 0.62);
+        backdrop-filter: blur(10px);
       }
+
       .lb[aria-hidden="false"] { display: flex; }
 
       .lbPanel {
         width: min(980px, 100%);
         height: min(86vh, 760px);
-        border-radius: 22px;
-        border: 1px solid rgba(255,255,255,0.14);
-        background: rgba(7,10,16,0.86);
-        box-shadow: 0 30px 90px rgba(0,0,0,0.65);
-        overflow: hidden;
         display: grid;
         grid-template-rows: auto 1fr;
+        overflow: hidden;
+        border-radius: 22px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(7, 10, 16, 0.86);
+        box-shadow: 0 30px 90px rgba(0, 0, 0, 0.65);
       }
 
       .lbTop {
-        display:flex;
-        align-items:center;
+        display: flex;
+        align-items: center;
         justify-content: space-between;
         gap: 10px;
         padding: 10px 12px;
-        border-bottom: 1px solid rgba(255,255,255,0.10);
-        background: rgba(255,255,255,0.03);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.03);
       }
 
       .lbTitle {
-        font-size: 13px;
-        color: rgba(234,240,255,0.78);
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
         max-width: 55vw;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: rgba(236, 242, 255, 0.78);
+        font-size: 13px;
       }
 
-      .lbBtns {
-        display:flex;
-        gap: 8px;
-        align-items:center;
+      .lbBtns,
+      .lbControls {
+        display: flex;
         flex-wrap: wrap;
-        justify-content: flex-end;
+        align-items: center;
+        gap: 8px;
       }
 
       .lbBtn {
-        border: 1px solid rgba(255,255,255,0.14);
-        background: rgba(0,0,0,0.40);
-        color: rgba(234,240,255,0.92);
         padding: 8px 10px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
         border-radius: 999px;
+        background: rgba(0, 0, 0, 0.4);
+        color: rgba(236, 242, 255, 0.92);
         font-size: 13px;
-        cursor: pointer;
-        user-select: none;
-      }
-      .lbBtn:hover { opacity: 0.95; }
-
-      .lbControls {
-        display:flex;
-        gap: 8px;
-        align-items:center;
       }
 
       .lbRange { width: 160px; }
-
       .lbBody { position: relative; overflow: hidden; }
 
       .lbStage {
-        position:absolute;
+        position: absolute;
         inset: 0;
-        display:flex;
-        align-items:center;
-        justify-content:center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         touch-action: none;
         cursor: grab;
       }
+
       .lbStage.dragging { cursor: grabbing; }
 
       .lbImg {
-        max-width: none;
-        max-height: none;
+        display: block;
         width: auto;
         height: auto;
-        display:block;
+        max-width: none;
+        max-height: none;
         transform-origin: 50% 50%;
         will-change: transform;
         user-select: none;
@@ -572,154 +737,35 @@
       }
 
       .lbHint {
-        position:absolute;
+        position: absolute;
         right: 12px;
         bottom: 10px;
-        font-size: 12px;
-        color: rgba(234,240,255,0.55);
-        background: rgba(0,0,0,0.35);
-        border: 1px solid rgba(255,255,255,0.10);
         padding: 6px 10px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 999px;
+        background: rgba(0, 0, 0, 0.35);
+        color: rgba(236, 242, 255, 0.55);
+        font-size: 12px;
         backdrop-filter: blur(8px);
       }
 
-      @media (max-width: 560px){
+      @media (max-width: 900px) {
+        .brand span:last-child { font-size: 18px; }
+        .heroInner,
+        .section3,
+        .supportGrid,
+        #portable-unit .supportGrid,
+        .heroMeta { grid-template-columns: 1fr; }
+        h1 { font-size: 36px; }
+        .slide { flex-basis: 290px; max-width: 290px; }
+        .portableImg { max-width: 200px; margin-bottom: 12px; }
+      }
+
+      @media (max-width: 560px) {
         .lbTitle { max-width: 52vw; }
         .lbRange { width: 120px; }
       }
-
-      /* Video embed */
-      .videoShell{
-        margin-top: 12px;
-        border-radius: 18px;
-        border: 1px solid rgba(255,255,255,0.12);
-        background: rgba(20, 24, 32, 0.65);
-        box-shadow: 0 22px 60px rgba(0,0,0,0.45);
-        overflow: hidden;
-        backdrop-filter: blur(8px);
-      }
-
-      .videoFrame{
-        position: relative;
-        width: 100%;
-        padding-top: 56.25%;
-        background: linear-gradient(180deg, rgba(32, 36, 46, 0.95), rgba(22, 26, 34, 0.95));
-      }
-
-      .videoFrame::before{
-        content:"";
-        position:absolute;
-        inset:0;
-        background: radial-gradient(120% 120% at 50% 50%, rgba(40, 46, 60, 0.6), rgba(20, 24, 32, 0.9));
-        z-index: 0;
-      }
-
-      .videoFrame iframe{
-        position:absolute;
-        inset:0;
-        width:100%;
-        height:100%;
-        border:0;
-        z-index: 1;
-        background: transparent;
-        filter: brightness(0.90) contrast(1.05);
-      }
-
-      /* Portable unit image sizing */
-      #portable-unit .supportGrid{
-        grid-template-columns: 0.9fr 1.1fr;
-        align-items: center;
-      }
-
-      .portableImg{
-        width: 100%;
-        max-width: 220px;
-        height: auto;
-        display: block;
-        margin: 0 auto;
-        border-radius: 16px;
-        background: rgba(0,0,0,0.20);
-        box-shadow: 0 18px 45px rgba(0,0,0,0.45);
-      }
-
-      @media (max-width: 900px){
-        #portable-unit .supportGrid{ grid-template-columns: 1fr; }
-        .portableImg{ max-width: 200px; margin-bottom: 12px; }
-      }
-
-  /* ===== Support message form ===== */
-.msgForm{
-  margin-top: 12px;
-  display: grid;
-  gap: 10px;
-}
-
-.msgLabel{
-  display: grid;
-  gap: 6px;
-  color: rgba(234,240,255,0.78);
-  font-size: 13px;
-}
-
-.msgInput, .msgTextarea{
-  width: 100%;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(0,0,0,0.25);
-  color: rgba(234,240,255,0.95);
-  padding: 10px 12px;
-  outline: none;
-}
-
-.msgTextarea{ resize: vertical; min-height: 120px; }
-
-.msgInput:focus, .msgTextarea:focus{
-  border-color: rgba(123,224,214,0.55);
-  box-shadow: 0 0 0 3px rgba(123,224,214,0.12);
-}
-
-.msgBtn{
-  width: fit-content;
-  border: 0;
-  border-radius: 999px;
-  padding: 10px 14px;
-  font-weight: 750;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #071015;
-  cursor: pointer;
-}
-
-.msgBtn:hover{ opacity: 0.95; }
-
-/* Success message styling */
-.msgSuccess{
-  margin-top: 18px; /* creates space from content above */
-  padding: 16px;
-  border-radius: 16px;
-
-  background: linear-gradient(
-    180deg,
-    rgba(123,224,214,0.18),
-    rgba(123,224,214,0.10)
-  );
-
-  border: 1px solid rgba(123,224,214,0.45);
-  box-shadow: 0 12px 40px rgba(123,224,214,0.18);
-}
-
-/* Make the title stand out */
-.msgSuccess .softTitle{
-  color: var(--accent);
-  font-weight: 850;
-  margin-bottom: 6px;
-}
-
-/* Keep body text calm */
-.msgSuccess .softText{
-  color: rgba(234,240,255,0.9);
-}
- </style>
+    </style>
   </head>
 
   <body>
@@ -732,200 +778,141 @@
 
         <div class="navPills">
           <a class="pill" href="#how">How it works</a>
-          <a class="pill" href="#install">Install</a>
+          <a class="pill" href="#features">Features</a>
           <a class="pill" href="#privacy">Privacy</a>
           <a class="pill" href="#support">Support</a>
-          <a class="pill primary" href="#get-app">Get the App</a>
+          <a class="pill primary" href="#get-app">Get the app</a>
         </div>
       </div>
 
-     <section class="hero" id="top">
-  <div class="heroInner">
-    <div>
-      <div class="kickerRow">
-        <div class="kicker"><strong>Safety-first</strong> • Community app</div>
-        <div class="kicker">Calm under stress</div>
-      </div>
+      <section class="hero" id="top">
+        <div class="heroInner">
+          <div>
+            <div class="kickerRow">
+              <div class="kicker"><strong>Cross-platform</strong> • iPhone + Android</div>
+              <div class="kicker">Trusted contact alerts</div>
+            </div>
 
-      <h1 id="tagline">SOS alerts for the people you trust — fast, clear, and privacy-first.</h1>
-      <p class="sub">
-        SmartAlertPlusTT lets you send SOS alerts to your chosen groups —
-        family, friends, coworkers, or a local community.
-        Simple to understand and use.
-      </p>
+            <h1 id="tagline">Emergency alerts for the people you trust — fast, clear, and ready when it matters most.</h1>
+            <p class="sub">
+              SmartAlertPlusTT helps you notify trusted contacts quickly with your details and location.
+              Built for real-world conditions, with a setup flow designed to stay clear under stress.
+            </p>
+            <p class="sub">
+              Each alert stays within the trusted groups you choose. That keeps the experience focused,
+              private, and easier to act on when something is wrong.
+            </p>
 
-      <!-- NEW: clear top explanation (single paragraph) -->
-      <p class="sub subExplain">
-        SmartAlertPlusTT is an Android-only, app-to-app emergency alert system. Alerts are sent only inside exclusive private groups: a Group ID is created for a group, and each person must enter that same Group ID during initial setup (each user can store up to two Group IDs). This ensures SOS notifications go only to verified members of that specific group — not the public. When an SOS is triggered, group members receive a high-priority alert with the sender’s name, registered address, contact number, and GPS location (if available).
-      </p>
+            <div class="ctaRow">
+              <a class="pill primary" href="#how">See how it works</a>
+              <a class="pill ghost" href="#get-app">View availability</a>
+              <a class="pill ghost" href="#support">Need help?</a>
+            </div>
 
-      <div class="ctaRow">
-        <a class="pill primary" href="#install">Watch Install Guide</a>
-        <a class="pill ghost" href="#how">See How It Works</a>
-        <a class="pill ghost" href="#support">Need help?</a>
-      </div>
-    </div>
+            <div class="heroMeta" aria-label="Quick highlights">
+              <div class="miniStat">
+                <strong>Fast setup</strong>
+                <span>Simple onboarding, clear permissions, and guided screenshots.</span>
+              </div>
+              <div class="miniStat">
+                <strong>Trusted delivery</strong>
+                <span>Alerts go only to the contacts and groups you’ve chosen.</span>
+              </div>
+              <div class="miniStat">
+                <strong>Ready on mobile</strong>
+                <span>Designed for both iPhone and Android with platform-specific flows.</span>
+              </div>
+            </div>
+          </div>
 
-    <div class="mediaCard" aria-label="App preview">
-      <div class="mediaTop">
-        <div class="dots" aria-hidden="true">
-          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-        </div>
-        <div style="color: rgba(234,240,255,0.70); font-size: 12px;">
-          App preview
-        </div>
-      </div>
-      <div class="mediaBody">
-        <div class="phoneFrame">
-          <img
-            class="heroShot"
-            src="screenshots/21.png"
-            alt="SmartAlertPlusTT home screen"
-            loading="eager"
-            decoding="async"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-      <section class="section3" aria-label="Key benefits">
-        <div class="card">
-          <div class="cardTitle">Fast, clear alerts</div>
-         
-        <div class="card">
-          <div class="cardTitle">Built for setup success</div>
-          
-        </div>
-        <div class="card">
-          <div class="cardTitle">Privacy-first</div>
-          
+          <div class="mediaCard" aria-label="App preview">
+            <div class="mediaTop">
+              <div class="dots" aria-hidden="true">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              </div>
+              <div style="color: rgba(236, 242, 255, 0.7); font-size: 12px;">App preview</div>
+            </div>
+            <div class="mediaBody">
+              <div class="phoneFrame">
+                <img
+                  class="heroShot"
+                  src="/screenshots/sap-home.png"
+                  alt="SmartAlertPlusTT home screen"
+                  loading="eager"
+                  decoding="async"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- How it works -->
+      <section class="section3" id="features" aria-label="Key benefits">
+        <div class="card">
+          <div class="cardTitle">Fast, clear alerts</div>
+          <p class="cardText">Send an SOS quickly and give your chosen contacts the information they need without extra confusion.</p>
+        </div>
+
+        <div class="card">
+          <div class="cardTitle">Built for real-world use</div>
+          <p class="cardText">From setup to delivery, the experience is designed to stay understandable when stress is high.</p>
+        </div>
+
+        <div class="card">
+          <div class="cardTitle">Private by design</div>
+          <p class="cardText">Alerts stay within the trusted groups you set up, instead of broadcasting to the public.</p>
+        </div>
+      </section>
+
       <section class="block" id="how">
         <div class="blockHeader">
           <div>
-            <h2>How To Set-Up And Install Your SOS Widget</h2>
-            
+            <h2>How it works</h2>
+            <p>
+              The app guides users through a clear setup process so alerts are ready before an emergency happens.
+              The screenshots below reflect the current cross-platform experience.
+            </p>
           </div>
           <div class="blockMeta">
             <span class="kicker">Guided setup</span>
+            <span class="kicker">Cross-platform flow</span>
             <span class="kicker">Clear actions</span>
-            <span class="kicker">No confusion</span>
           </div>
         </div>
 
         <div class="carousel" data-carousel aria-label="Setup flow preview">
           <div class="track" data-track>
-           <div class="slide">
-              <img src="screenshots/13.png" alt="Setup step 1 screen" loading="lazy" decoding="async" />
-              <div class="slideCap">One-time Verification: Enter your 7 digit Trinidad phone-number.</div>
+            <div class="slide">
+              <img src="/screenshots/sap-phone-verification.png" alt="Phone verification screen" loading="lazy" decoding="async" />
+              <div class="slideCap">Start with your number and secure the device before continuing.</div>
             </div>
             <div class="slide">
-              <img src="screenshots/16.png" alt="Setup step 1 screen" loading="lazy" decoding="async" />
-              <div class="slideCap">Step 1: Enter your profile details once.</div>
+              <img src="/screenshots/sap-conditions.png" alt="Important notice screen" loading="lazy" decoding="async" />
+              <div class="slideCap">A quick notice explains the app is built for real-world conditions.</div>
             </div>
             <div class="slide">
-              <img src="screenshots/17.png" alt="Setup step 2 screen" loading="lazy" decoding="async" />
-              <div class="slideCap">Step 2: Add emergency contacts and essentials.</div>
+              <img src="/screenshots/sap-welcome.png" alt="Welcome screen" loading="lazy" decoding="async" />
+              <div class="slideCap">The welcome flow introduces the app as your personal emergency network.</div>
             </div>
             <div class="slide">
-              <img src="screenshots/20.png" alt="Permission center screen" loading="lazy" decoding="async" />
-              <div class="slideCap">Permissions Center: quick fixes if anything is missing.</div>
+              <img src="/screenshots/sap-identity.png" alt="Identity setup screen" loading="lazy" decoding="async" />
+              <div class="slideCap">Add the details responders and trusted contacts may need.</div>
             </div>
             <div class="slide">
-              <img src="screenshots/21.png" alt="Homeactivity Page after setup" loading="lazy" decoding="async" />
-              <div class="slideCap">Home: Once your setup is complete this will be the layout of your homactivity page.</div>
+              <img src="/screenshots/sap-contacts.png" alt="Emergency contacts setup screen" loading="lazy" decoding="async" />
+              <div class="slideCap">Choose who gets your SOS and store the essentials in one place.</div>
             </div>
             <div class="slide">
-              <img src="screenshots/24.png" alt="Let's install your SOS widget" loading="lazy" decoding="async" />
-              <div class="slideCap">Exit app and return to your homescreen.</div>
-            </div>
-              <div class="slide">
-              <img src="screenshots/25.png" alt="After holding finger on Homescreen "Widget Selection Appears" loading="lazy" decoding="async" />
-              <div class="slideCap">Hold your finger on your homescreen until the widget selection appears then click on it.</div>
-            </div>
-             <div class="slide">
-              <img src="screenshots/26.png" alt="Select the SmartAlert Widget from list" loading="lazy" decoding="async" />
-              <div class="slideCap">After clicking the widget the menu will appear with the list of available widgets,select SmartAlertPlustt.</div>
-           </div>
-           <div class="slide">
-           <img src="screenshots/27.png" alt="SOS Widget" loading="lazy" decoding="async" />
-              <div class="slideCap">After selecting the SmartAlertPlustt widget this is what it looks like, hold and place anywhere on your homepage.</div>
-          </div>
-           <div class="controls" data-controls>
-            <button class="ctrlBtn" type="button" data-prev aria-label="Previous slide">‹ Prev</button>
-            <div class="dotsRow" data-dots aria-label="Slide dots"></div>
-            <button class="ctrlBtn" type="button" data-next aria-label="Next slide">Next ›</button>
-          </div>
-          </section>
-
-      <!-- Install / video -->
-      <section class="block" id="install">
-        <div class="blockHeader">
-          <div>
-            <h2>Install & setup</h2>
-            
-          </div>
-          <div class="blockMeta">
-            <span class="kicker">Video-first</span>
-            <span class="kicker">Beginner-friendly</span>
-          </div>
-        </div>
-
-        <div style="margin-top: 14px;" class="softPanel">
-          <div class="softTitle">Install Guide Video</div>
-
-          <div class="videoShell" aria-label="Install guide video">
-            <div class="videoFrame">
-              <iframe
-                src="https://player.vimeo.com/video/1164354194?h=0&title=0&byline=0&portrait=0"
-                frameborder="0"
-                allow="autoplay; fullscreen; picture-in-picture"
-                allowfullscreen
-                loading="lazy"
-                title="SmartAlertPlusTT Install Guide"
-              ></iframe>
-            </div>
-          </div>
-
-        
-        </div>
-      </section>
-
-      <!-- Sending SOS -->
-      <section class="block" aria-label="Sending an SOS">
-        <div class="blockHeader">
-          <div>
-            <h2>Sending an SOS is simple</h2>
-          
-          </div>
-          <div class="blockMeta">
-            <span class="kicker">One clear action</span>
-            <span class="kicker">Fast delivery</span>
-          </div>
-        </div>
-
-        <div class="carousel" data-carousel aria-label="Send SOS preview">
-          <div class="track" data-track>
-            <div class="slide">
-              <img src="screenshots/27.png" alt="SOS widget on home screen" loading="lazy" decoding="async" />
-              <div class="slideCap">Firstly: Tap on SOS widget located on your home-screen.</div>
+              <img src="/screenshots/sap-permissions.png" alt="Permissions screen" loading="lazy" decoding="async" />
+              <div class="slideCap">Enable critical permissions so alerts include the right details.</div>
             </div>
             <div class="slide">
-              <img src="screenshots/28.png" alt="Send SOS screen" loading="lazy" decoding="async" />
-              <div class="slideCap">Send SOS: Select group and add message before sending.</div>
+              <img src="/screenshots/sap-home.png" alt="Home screen" loading="lazy" decoding="async" />
+              <div class="slideCap">Once setup is complete, the home screen keeps key actions easy to reach.</div>
             </div>
             <div class="slide">
-              <img src="screenshots/29.png" alt="SOS sent confirmation" loading="lazy" decoding="async" />
-              <div class="slideCap">Sent: A calm success message so you’re not guessing.</div>
-            </div>
-            <div class="slide">
-              <img src="screenshots/30.png" alt="SOS alert delivery example" loading="lazy" decoding="async" />
-              <div class="slideCap">Alert delivery: Your group receives the SOS clearly.</div>
+              <img src="/screenshots/sap-sos.png" alt="Send SOS screen" loading="lazy" decoding="async" />
+              <div class="slideCap">When needed, send an SOS to the selected contacts with your details and location.</div>
             </div>
           </div>
 
@@ -937,28 +924,90 @@
         </div>
       </section>
 
-      <!-- Portable SOS Unit -->
+      <section class="block" id="install">
+        <div class="blockHeader">
+          <div>
+            <h2>Install guide</h2>
+            <p>
+              A step-by-step video is available for users who prefer to see the setup before getting started.
+            </p>
+          </div>
+          <div class="blockMeta">
+            <span class="kicker">Video guide</span>
+            <span class="kicker">Beginner-friendly</span>
+          </div>
+        </div>
+
+        <div class="softPanel" style="margin-top: 14px;">
+          <div class="softTitle">Install guide video</div>
+          <div class="videoShell" aria-label="Install guide video">
+            <div class="videoFrame">
+              <iframe
+                src="https://player.vimeo.com/video/1164354194?h=0&title=0&byline=0&portrait=0"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowfullscreen
+                loading="lazy"
+                title="SmartAlertPlusTT Install Guide"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="block" aria-label="Sending an SOS">
+        <div class="blockHeader">
+          <div>
+            <h2>Sending an SOS is simple</h2>
+            <p>
+              The app is designed so the core action stays clear. On iPhone, SOS is available inside the app home screen.
+              On Android, the experience may also include a widget depending on the current version.
+            </p>
+          </div>
+          <div class="blockMeta">
+            <span class="kicker">Fast delivery</span>
+            <span class="kicker">Clear confirmation</span>
+          </div>
+        </div>
+
+        <div class="carousel" data-carousel aria-label="Send SOS preview">
+          <div class="track" data-track>
+            <div class="slide">
+              <img src="/screenshots/sap-home.png" alt="Home screen before sending SOS" loading="lazy" decoding="async" />
+              <div class="slideCap">Start from the main app screen where the SOS action is easy to access.</div>
+            </div>
+            <div class="slide">
+              <img src="/screenshots/sap-sos.png" alt="Send SOS screen" loading="lazy" decoding="async" />
+              <div class="slideCap">Review the action and send your SOS with your details and location.</div>
+            </div>
+          </div>
+
+          <div class="controls" data-controls>
+            <button class="ctrlBtn" type="button" data-prev aria-label="Previous slide">‹ Prev</button>
+            <div class="dotsRow" data-dots aria-label="Slide dots"></div>
+            <button class="ctrlBtn" type="button" data-next aria-label="Next slide">Next ›</button>
+          </div>
+        </div>
+      </section>
+
       <section class="block" id="portable-unit">
         <div class="blockHeader">
           <div>
-            <h2>Portable SOS Unit (Optional)</h2>
+            <h2>Portable SOS unit (optional)</h2>
             <p>
-              For moments when a phone isn’t nearby or usable, the portable SOS unit
-              gives you a simple physical backup — one press sends an SOS to your
-              pre-programmed group.
+              For moments when a phone is not nearby or usable, the portable SOS unit offers a simple physical backup.
             </p>
           </div>
           <div class="blockMeta">
             <span class="kicker">Rechargeable</span>
             <span class="kicker">One-press SOS</span>
-            <span class="kicker">Works with your group</span>
+            <span class="kicker">Backup option</span>
           </div>
         </div>
 
         <div class="supportGrid">
           <div class="softPanel">
             <img
-              src="screenshots/37.png"
+              src="/screenshots/37.png"
               alt="Portable SOS unit keychain device"
               class="portableImg"
               loading="lazy"
@@ -969,216 +1018,137 @@
           <div class="softPanel">
             <div class="softTitle">How it works</div>
             <p class="softText">
-              The portable unit is linked to your existing setup. When pressed, it sends the same SOS alert as the app —
-              reaching only the trusted group you’ve already chosen.
+              The portable unit is linked to your existing setup. When pressed, it sends the same SOS alert to the trusted contacts and groups you’ve already chosen.
             </p>
             <p class="hint">
-              Designed as a backup option for added peace of mind. No screens. No menus. Just a clear, physical action.
+              Designed as an optional backup for added peace of mind. No screens. No menus. Just one clear physical action.
             </p>
           </div>
         </div>
       </section>
 
-      <!-- Receiving SOS -->
-      <section class="block" aria-label="Receiving an SOS">
-        <div class="blockHeader">
-          <div>
-            <h2>Receiving an SOS is clear</h2>
-            <p>
-              Received alerts are accompanied by a loud alarm sound designed to get your attention immediately.
-            </p>
-          </div>
-          <div class="blockMeta">
-            <span class="kicker">Readable</span>
-            <span class="kicker">Actionable</span>
-          </div>
-        </div>
-
-        <div class="carousel" data-carousel aria-label="Receive SOS preview">
-          <div class="track" data-track>
-             <div class="slide">
-              <img src="screenshots/31.png" alt="SOS notification and siren preview" loading="lazy" decoding="async" />
-              <div class="slideCap">Incoming SOS: High-visibility alert so it’s not missed.</div>
-            </div>
-              <div class="slide">
-              <img src="screenshots/33.png" alt="SmartAlertPlustt App" loading="lazy" decoding="async" />
-              <div class="slideCap">Click the SmartAlertPlustt App.</div>
-            </div>
-              <div class="slide">
-              <img src="screenshots/34.png" alt="Last SOS Alert Message" loading="lazy" decoding="async" />
-              <div class="slideCap"> Click "Last SOS Alert" button on your Homeactivity page.</div>
-            </div>
-            <div class="slide">
-              <img src="screenshots/35.png" alt="SOS details screen" loading="lazy" decoding="async" />
-              <div class="slideCap">SOS details: Clear info and actions (call, location, etc.).</div>
-            </div>
-          </div>
-
-          <div class="controls" data-controls>
-            <button class="ctrlBtn" type="button" data-prev aria-label="Previous slide">‹ Prev</button>
-            <div class="dotsRow" data-dots aria-label="Slide dots"></div>
-            <button class="ctrlBtn" type="button" data-next aria-label="Next slide">Next ›</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Privacy -->
       <section class="block" id="privacy">
         <div class="blockHeader">
           <div>
-            <h2>Privacy & safety reassurance</h2>
+            <h2>Privacy and trust</h2>
             <p>
-     Your personal details stay stored on your device and are used only to send emergency alerts to the group you choose.
-     We don’t collect unnecessary data or track behaviour — your information exists solely to make the alert work.
+              Personal details are used only to make the emergency alert work. The focus is on delivering useful information to your chosen contacts, not collecting unnecessary behavior data.
             </p>
           </div>
           <div class="blockMeta">
             <span class="kicker">Transparent</span>
-            <span class="kicker">Respectful</span>
+            <span class="kicker">Private by design</span>
           </div>
         </div>
 
         <div class="supportGrid">
           <div class="softPanel">
-            <div class="softTitle">What we focus on</div>
+            <div class="softTitle">What the app focuses on</div>
             <p class="softText">
-              Clear SOS delivery, readable alerts, and guidance that works for real people — not just “tech people.”
+              Clear SOS delivery, readable information, and guidance that works for real people under real pressure.
             </p>
           </div>
           <div class="softPanel">
-            <div class="softTitle">What we avoid</div>
+            <div class="softTitle">Privacy policy</div>
             <p class="softText">
-              Unnecessary complexity, confusing screens, and anything that makes emergencies harder.
+              You can review the full privacy policy before downloading or sharing the app.
+            </p>
+            <div class="ctaRow">
+              <a class="pill ghost" href="/privacy" target="_blank" rel="noopener noreferrer">Read privacy policy</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="block" id="get-app">
+        <div class="blockHeader">
+          <div>
+            <h2>Get the app</h2>
+            <p>
+              SmartAlertPlusTT is being positioned as a cross-platform app. iPhone availability is the current priority, while Android availability will return once the updated version is ready.
+            </p>
+          </div>
+          <div class="blockMeta">
+            <span class="kicker">iPhone first</span>
+            <span class="kicker">Android update in progress</span>
+          </div>
+        </div>
+
+        <div class="storeRow">
+          <div class="storeCard">
+            <strong>iPhone</strong>
+            <span>Currently in review / coming soon.</span>
+          </div>
+          <div class="storeCard">
+            <strong>Android</strong>
+            <span>Temporarily unavailable while the updated version is being prepared.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="block" id="support">
+        <div class="blockHeader">
+          <div>
+            <h2>Support</h2>
+            <p>If you need help, send a message and we’ll get back to you as soon as possible.</p>
+          </div>
+          <div class="blockMeta">
+            <span class="kicker">Email support</span>
+            <span class="kicker">Privacy-first</span>
+          </div>
+        </div>
+
+        <div class="supportGrid">
+          <div class="softPanel">
+            <div class="softTitle">Send us a message</div>
+
+            <form class="msgForm" action="https://formspree.io/f/xkovrovq" method="POST">
+              <label class="msgLabel">
+                Your name (optional)
+                <input class="msgInput" type="text" name="name" autocomplete="name" />
+              </label>
+
+              <label class="msgLabel">
+                Your email (so we can reply)
+                <input class="msgInput" type="email" name="email" autocomplete="email" required />
+              </label>
+
+              <label class="msgLabel">
+                Your message
+                <textarea class="msgTextarea" name="message" rows="5" required></textarea>
+              </label>
+
+              <button class="msgBtn" type="submit">Send message</button>
+            </form>
+
+            <div class="msgSuccess" id="msgSuccess">
+              <div class="softTitle">💚 Message sent</div>
+              <p class="softText">Thanks for reaching out. We’ll get back to you within 24–48 hours.</p>
+              <p class="hint">If you don’t see our reply, check your spam or promotions folder.</p>
+            </div>
+          </div>
+
+          <div class="softPanel">
+            <div class="softTitle">What to expect</div>
+            <p class="softText">Support replies are typically sent within 24–48 hours.</p>
+            <p class="hint">
+              For install questions, include your device type and a short description of the issue so we can help faster.
             </p>
           </div>
         </div>
       </section>
-<!-- Get the app -->
-<section class="block" id="get-app">
-  <div class="blockHeader">
-    <div>
-      <h2>Get the app</h2>
-    </div>
-    <div class="blockMeta">
-      <span class="kicker">Available now</span>
-    </div>
-  </div>
-
-  <div class="ctaRow" style="margin-top: 18px;">
-    <a
-      href="https://play.google.com/store/apps/details?id=com.smartalertplustt"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Get SmartAlertPlusTT on Google Play"
-      style="display:inline-flex; align-items:center; text-decoration:none;"
-    >
-      <img
-        src="/assets/GetItOnGooglePlay_Badge_Web_color_English.svg"
-        alt="Get it on Google Play"
-        style="height: 52px; width: auto; display:block;"
-        loading="lazy"
-      />
-    </a>
-  </div>
-</section>
-
-    <!-- Support -->
-<section class="block" id="support">
-  <div class="blockHeader">
-    <div>
-      <h2>Support</h2>
-      <p>
-        If you need assistance, send us a message.
-      </p>
-    </div>
-    <div class="blockMeta">
-      <span class="kicker">Email support</span>
-      <span class="kicker">Privacy-first</span>
-    </div>
-  </div>
-
-  <div class="supportGrid">
-    <!-- Message box -->
-    <div class="softPanel">
-      <div class="softTitle">Send us a message</div>
-    
-
-      <form
-        class="msgForm"
-        action="https://formspree.io/f/xkovrovq"
-        method="POST"
-      >
-        <label class="msgLabel">
-          Your name (optional)
-          <input
-            class="msgInput"
-            type="text"
-            name="name"
-            autocomplete="name"
-          />
-        </label>
-
-        <label class="msgLabel">
-          Your email (so we can reply)
-          <input
-            class="msgInput"
-            type="email"
-            name="email"
-            autocomplete="email"
-            required
-          />
-        </label>
-
-        <label class="msgLabel">
-          Your message
-          <textarea
-            class="msgTextarea"
-            name="message"
-            rows="5"
-            required
-          ></textarea>
-        </label>
-
-        <button class="msgBtn" type="submit">
-          Send message
-        </button>
-      </form>
-
-      <!-- Success message (hidden until submit) -->
-      <div class="msgSuccess" id="msgSuccess" style="display:none;">
-        <div class="softTitle">💚 Message sent</div>
-        <p class="softText">
-          Thanks for reaching out. We’ll get back to you within <strong>24–48 hours</strong>.
-        </p>
-        <p class="hint">
-          If you don’t see our reply, please check your spam/promotions folder.
-        </p>
-      </div>
-      </div>
-
-    <!-- Reassurance panel -->
-    <div class="softPanel">
-      <div class="softTitle">What to expect</div>
-      <p class="softText">
-        Response with 24-28 hours..
-      </p>
-    </div>
-  </div>
-</section>
-
 
       <div class="footer">
         <div>© <span id="year"></span> <span id="appName2">SmartAlertPlusTT</span></div>
-        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
           <a href="/terms">Terms</a>
           <a href="/privacy">Privacy</a>
           <a href="/safety">Safety</a>
-          <a href="/support">Contact</a>
+          <a href="#support">Contact</a>
         </div>
       </div>
     </div>
 
-    <!-- Lightbox markup -->
     <div class="lb" id="lightbox" aria-hidden="true" role="dialog" aria-label="Screenshot viewer">
       <div class="lbPanel" role="document">
         <div class="lbTop">
@@ -1206,15 +1176,14 @@
     </div>
 
     <script>
-      // ====== Plain placeholders ======
-      (function(){
-        const APP_NAME = "SmartAlertPlusTT";
-        const tagline = "SOS alerts for the people you trust — fast, clear, and privacy-first.";
+      (function () {
+        const APP_NAME = 'SmartAlertPlusTT';
+        const tagline = 'Emergency alerts for the people you trust — fast, clear, and ready when it matters most.';
 
-        const el1 = document.getElementById("appName");
-        const el2 = document.getElementById("appName2");
-        const elTag = document.getElementById("tagline");
-        const elYear = document.getElementById("year");
+        const el1 = document.getElementById('appName');
+        const el2 = document.getElementById('appName2');
+        const elTag = document.getElementById('tagline');
+        const elYear = document.getElementById('year');
 
         if (el1) el1.textContent = APP_NAME;
         if (el2) el2.textContent = APP_NAME;
@@ -1222,154 +1191,151 @@
         if (elYear) elYear.textContent = String(new Date().getFullYear());
       })();
 
-      // ==========================
-      // CAROUSEL LOGIC
-      // ==========================
       (function () {
-        const carousels = document.querySelectorAll("[data-carousel]");
+        const carousels = document.querySelectorAll('[data-carousel]');
+
         carousels.forEach((root) => {
-          const track = root.querySelector("[data-track]");
-          const slides = Array.from(track.querySelectorAll(".slide"));
-          const prev = root.querySelector("[data-prev]");
-          const next = root.querySelector("[data-next]");
-          const dotsWrap = root.querySelector("[data-dots]");
+          const track = root.querySelector('[data-track]');
+          const slides = Array.from(track.querySelectorAll('.slide'));
+          const prev = root.querySelector('[data-prev]');
+          const next = root.querySelector('[data-next]');
+          const dotsWrap = root.querySelector('[data-dots]');
 
-          if (!track || slides.length === 0) return;
+          if (!track || slides.length === 0 || !dotsWrap) return;
 
-          // Build dots
           const dots = slides.map((_, i) => {
-            const b = document.createElement("button");
-            b.className = "dotBtn";
-            b.type = "button";
-            b.setAttribute("aria-label", `Go to slide ${i + 1}`);
-            b.addEventListener("click", () => scrollToIndex(i));
+            const b = document.createElement('button');
+            b.className = 'dotBtn';
+            b.type = 'button';
+            b.setAttribute('aria-label', `Go to slide ${i + 1}`);
+            b.addEventListener('click', () => scrollToIndex(i));
             dotsWrap.appendChild(b);
             return b;
           });
 
           function nearestIndex() {
             const center = track.scrollLeft + track.clientWidth / 2;
-            let best = 0, bestDist = Infinity;
+            let best = 0;
+            let bestDist = Infinity;
 
             slides.forEach((s, i) => {
               const left = s.offsetLeft;
               const mid = left + s.clientWidth / 2;
               const d = Math.abs(mid - center);
-              if (d < bestDist) { bestDist = d; best = i; }
+              if (d < bestDist) {
+                bestDist = d;
+                best = i;
+              }
             });
 
             return best;
           }
 
           function setActiveDot(i) {
-            dots.forEach((d, idx) => d.setAttribute("aria-current", idx === i ? "true" : "false"));
+            dots.forEach((d, idx) => {
+              d.setAttribute('aria-current', idx === i ? 'true' : 'false');
+            });
           }
 
           function scrollToIndex(i) {
             const s = slides[i];
             if (!s) return;
             const left = s.offsetLeft - (track.clientWidth - s.clientWidth) / 2;
-            track.scrollTo({ left, behavior: "smooth" });
+            track.scrollTo({ left, behavior: 'smooth' });
             setActiveDot(i);
           }
 
-          prev?.addEventListener("click", () => {
+          prev?.addEventListener('click', () => {
             const i = nearestIndex();
             scrollToIndex(Math.max(0, i - 1));
           });
 
-          next?.addEventListener("click", () => {
+          next?.addEventListener('click', () => {
             const i = nearestIndex();
             scrollToIndex(Math.min(slides.length - 1, i + 1));
           });
 
           let raf = 0;
-          track.addEventListener("scroll", () => {
+          track.addEventListener('scroll', () => {
             cancelAnimationFrame(raf);
             raf = requestAnimationFrame(() => setActiveDot(nearestIndex()));
           });
 
-          // Touch drag support (don’t steal taps on images)
           let isDown = false;
           let startX = 0;
           let startScroll = 0;
 
-          track.addEventListener("pointerdown", (e) => {
-            if (e.target && e.target.closest && e.target.closest(".slide img")) return;
-
+          track.addEventListener('pointerdown', (e) => {
+            if (e.target && e.target.closest && e.target.closest('.slide img')) return;
             isDown = true;
             startX = e.clientX;
             startScroll = track.scrollLeft;
             track.setPointerCapture(e.pointerId);
           });
 
-          track.addEventListener("pointermove", (e) => {
+          track.addEventListener('pointermove', (e) => {
             if (!isDown) return;
             const dx = e.clientX - startX;
             track.scrollLeft = startScroll - dx;
           });
 
-          track.addEventListener("pointerup", () => { isDown = false; });
-          track.addEventListener("pointercancel", () => { isDown = false; });
+          track.addEventListener('pointerup', () => { isDown = false; });
+          track.addEventListener('pointercancel', () => { isDown = false; });
 
           setActiveDot(0);
         });
       })();
 
-      // ===========================
-      // LIGHTBOX / MAGNIFY VIEW
-      // ===========================
       (function () {
-        const lb = document.getElementById("lightbox");
-        const lbImg = document.getElementById("lbImg");
-        const lbTitle = document.getElementById("lbTitle");
-        const lbStage = document.getElementById("lbStage");
+        const lb = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lbImg');
+        const lbTitle = document.getElementById('lbTitle');
+        const lbStage = document.getElementById('lbStage');
+        const btnClose = document.getElementById('lbClose');
+        const btnIn = document.getElementById('lbZoomIn');
+        const btnOut = document.getElementById('lbZoomOut');
+        const btnReset = document.getElementById('lbReset');
+        const range = document.getElementById('lbZoom');
 
-        const btnClose = document.getElementById("lbClose");
-        const btnIn = document.getElementById("lbZoomIn");
-        const btnOut = document.getElementById("lbZoomOut");
-        const btnReset = document.getElementById("lbReset");
-        const range = document.getElementById("lbZoom");
+        if (!lb || !lbImg || !lbTitle || !lbStage || !btnClose || !btnIn || !btnOut || !btnReset || !range) return;
 
         let scale = 1;
         let tx = 0;
         let ty = 0;
-
         let dragging = false;
         let startX = 0;
         let startY = 0;
         let startTx = 0;
         let startTy = 0;
-
         let pointers = new Map();
         let pinchStartDist = 0;
         let pinchStartScale = 1;
 
-        function openLightbox(src, alt) {
-          lbImg.src = src;
-          lbImg.alt = alt || "Screenshot";
-          lbTitle.textContent = alt || "Screenshot";
-
-          scale = 1;
-          tx = 0;
-          ty = 0;
-          range.value = "1";
-          applyTransform();
-
-          lb.setAttribute("aria-hidden", "false");
-          document.body.style.overflow = "hidden";
+        function clamp(v, min, max) {
+          return Math.max(min, Math.min(max, v));
         }
-
-        function closeLightbox() {
-          lb.setAttribute("aria-hidden", "true");
-          document.body.style.overflow = "";
-          lbImg.src = "";
-        }
-
-        function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
 
         function applyTransform() {
           lbImg.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+        }
+
+        function openLightbox(src, alt) {
+          lbImg.src = src;
+          lbImg.alt = alt || 'Screenshot';
+          lbTitle.textContent = alt || 'Screenshot';
+          scale = 1;
+          tx = 0;
+          ty = 0;
+          range.value = '1';
+          applyTransform();
+          lb.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+          lb.setAttribute('aria-hidden', 'true');
+          document.body.style.overflow = '';
+          lbImg.src = '';
         }
 
         function setScale(next, anchorX, anchorY) {
@@ -1381,7 +1347,7 @@
             const rect = lbStage.getBoundingClientRect();
             const ax = anchorX - (rect.left + rect.width / 2);
             const ay = anchorY - (rect.top + rect.height / 2);
-            const k = (scale / prev) - 1;
+            const k = scale / prev - 1;
             tx -= ax * k;
             ty -= ay * k;
           }
@@ -1389,41 +1355,46 @@
           applyTransform();
         }
 
-        lb.addEventListener("pointerdown", (e) => {
+        lb.addEventListener('pointerdown', (e) => {
           if (e.target === lb) closeLightbox();
         });
 
-        btnClose.addEventListener("click", closeLightbox);
+        btnClose.addEventListener('click', closeLightbox);
 
-        document.addEventListener("keydown", (e) => {
-          if (lb.getAttribute("aria-hidden") === "false" && e.key === "Escape") closeLightbox();
+        document.addEventListener('keydown', (e) => {
+          if (lb.getAttribute('aria-hidden') === 'false' && e.key === 'Escape') closeLightbox();
         });
 
-        btnIn.addEventListener("click", () => setScale(scale + 0.2));
-        btnOut.addEventListener("click", () => setScale(scale - 0.2));
-        btnReset.addEventListener("click", () => { scale = 1; tx = 0; ty = 0; range.value = "1"; applyTransform(); });
-
-        range.addEventListener("input", () => {
-          const next = parseFloat(range.value || "1");
-          setScale(next);
+        btnIn.addEventListener('click', () => setScale(scale + 0.2));
+        btnOut.addEventListener('click', () => setScale(scale - 0.2));
+        btnReset.addEventListener('click', () => {
+          scale = 1;
+          tx = 0;
+          ty = 0;
+          range.value = '1';
+          applyTransform();
         });
 
-        lbStage.addEventListener("wheel", (e) => {
-          if (lb.getAttribute("aria-hidden") !== "false") return;
+        range.addEventListener('input', () => {
+          setScale(parseFloat(range.value || '1'));
+        });
+
+        lbStage.addEventListener('wheel', (e) => {
+          if (lb.getAttribute('aria-hidden') !== 'false') return;
           e.preventDefault();
           const step = e.deltaY > 0 ? -0.12 : 0.12;
           setScale(scale + step, e.clientX, e.clientY);
         }, { passive: false });
 
-        lbStage.addEventListener("pointerdown", (e) => {
-          if (lb.getAttribute("aria-hidden") !== "false") return;
+        lbStage.addEventListener('pointerdown', (e) => {
+          if (lb.getAttribute('aria-hidden') !== 'false') return;
 
           pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
           lbStage.setPointerCapture(e.pointerId);
 
           if (pointers.size === 1) {
             dragging = true;
-            lbStage.classList.add("dragging");
+            lbStage.classList.add('dragging');
             startX = e.clientX;
             startY = e.clientY;
             startTx = tx;
@@ -1437,12 +1408,12 @@
             pinchStartDist = Math.hypot(dx, dy);
             pinchStartScale = scale;
             dragging = false;
-            lbStage.classList.remove("dragging");
+            lbStage.classList.remove('dragging');
           }
         });
 
-        lbStage.addEventListener("pointermove", (e) => {
-          if (lb.getAttribute("aria-hidden") !== "false") return;
+        lbStage.addEventListener('pointermove', (e) => {
+          if (lb.getAttribute('aria-hidden') !== 'false') return;
           if (!pointers.has(e.pointerId)) return;
 
           pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
@@ -1476,7 +1447,7 @@
 
           if (pointers.size === 0) {
             dragging = false;
-            lbStage.classList.remove("dragging");
+            lbStage.classList.remove('dragging');
           }
 
           if (pointers.size === 1) {
@@ -1486,85 +1457,66 @@
             startTx = tx;
             startTy = ty;
             dragging = true;
-            lbStage.classList.add("dragging");
+            lbStage.classList.add('dragging');
           }
         }
 
-        lbStage.addEventListener("pointerup", endPointer);
-        lbStage.addEventListener("pointercancel", endPointer);
+        lbStage.addEventListener('pointerup', endPointer);
+        lbStage.addEventListener('pointercancel', endPointer);
 
-        document.querySelectorAll(".slide img").forEach((img) => {
-          img.addEventListener("click", (e) => {
+        document.querySelectorAll('.slide img').forEach((img) => {
+          img.addEventListener('click', (e) => {
             e.stopPropagation();
-            openLightbox(img.getAttribute("src"), img.getAttribute("alt"));
+            openLightbox(img.getAttribute('src'), img.getAttribute('alt'));
           });
         });
 
-        const hero = document.querySelector(".heroShot");
-        hero?.addEventListener("click", (e) => {
+        const hero = document.querySelector('.heroShot');
+        hero?.addEventListener('click', (e) => {
           e.stopPropagation();
-          openLightbox(hero.getAttribute("src"), hero.getAttribute("alt"));
+          openLightbox(hero.getAttribute('src'), hero.getAttribute('alt'));
         });
       })();
 
-    <script>
-  (function () {
-    const form = document.querySelector('#support form.msgForm');
-    const success = document.getElementById('msgSuccess');
+      (function () {
+        const form = document.querySelector('#support form.msgForm');
+        const success = document.getElementById('msgSuccess');
 
-    if (!form || !success) return;
+        if (!form || !success) return;
 
-    form.addEventListener('submit', async function (e) {
-      e.preventDefault();
+        form.addEventListener('submit', async function (e) {
+          e.preventDefault();
 
-      const btn = form.querySelector('button[type="submit"]');
-      const originalText = btn ? btn.textContent : '';
-      if (btn) {
-        btn.disabled = true;
-        btn.textContent = 'Sending...';
-      }
+          const btn = form.querySelector('button[type="submit"]');
+          const originalText = btn ? btn.textContent : '';
 
-      try {
-        const res = await fetch(form.action, {
-          method: 'POST',
-          body: new FormData(form),
-          headers: { 'Accept': 'application/json' }
+          if (btn) {
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
+          }
+
+          try {
+            const res = await fetch(form.action, {
+              method: 'POST',
+              body: new FormData(form),
+              headers: { Accept: 'application/json' }
+            });
+
+            if (!res.ok) throw new Error('Form submit failed');
+
+            form.reset();
+            form.style.display = 'none';
+            success.style.display = 'block';
+          } catch (err) {
+            form.submit();
+          } finally {
+            if (btn) {
+              btn.disabled = false;
+              btn.textContent = originalText;
+            }
+          }
         });
-
-        if (!res.ok) throw new Error('Form submit failed');
-
-        form.reset();
-        form.style.display = 'none';
-        success.style.display = 'block';
-      } catch (err) {
-        // If anything goes wrong, fall back to normal submit (redirect)
-        form.removeEventListener('submit', arguments.callee);
-        form.submit();
-      } finally {
-        if (btn) {
-          btn.disabled = false;
-          btn.textContent = originalText;
-        }
-      }
-    });
-  })();
-</script>
+      })();
+    </script>
   </body>
-    </html>
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</html>
