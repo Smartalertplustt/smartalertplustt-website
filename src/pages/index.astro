@@ -56,14 +56,19 @@
         flex-wrap: wrap;
       }
 
-      .region-banner {
-      margin-top: 10px;
-      margin-bottom: 6px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: #C89EFF;
+   .kickerRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
+.region-banner {
+  margin-left: auto; /* pushes it to the far right */
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #C89EFF;
+  white-space: nowrap;
+}
 
       .brand {
         display: flex;
@@ -802,10 +807,11 @@
               <div class="kicker">Trusted contact alerts</div>
             </div>
 
-            <p class="region-banner">
-            🇹🇹 Designed for Trinidad and Tobago
-            </p>
-    
+           <!-- RIGHT SIDE -->
+        <div class="region-banner">
+           🇹🇹 Designed for Trinidad and Tobago
+          </div>
+         </div>
 
             <h1 id="tagline">Emergency alerts for the people you trust — fast, clear, and ready when it matters most.</h1>
             <p class="sub">
